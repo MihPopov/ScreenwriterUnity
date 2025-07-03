@@ -1,19 +1,27 @@
+using System.IO;
 using UnityEngine;
 
 public class Decoder : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        string path = Application.persistentDataPath + "/test.txt";
+        string path = Application.dataPath + "/chars.json";
         StreamReader reader = new StreamReader(path);
-        var str = reader.ReadToEnd());
+        var str = reader.ReadToEnd();
+        print(str);
         reader.Close();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        CharacterClass user = JsonUtility.FromJson<CharacterClass>(str);
+        print("Id " + user.Id);
+        print("Name " + user.Name);
+        print(user.Data);
+        foreach (var d in user.Data)
+        {
+            print("Id "+d.Id);
+            print("Line "+d.Line);
+            print("To:");
+            print("Id"+d.To.Id);
+            print("Info"+d.To.Info);
+            print("Line"+d.To.Line);
+        }
     }
 }
