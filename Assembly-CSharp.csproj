@@ -150,6 +150,7 @@
     <Compile Include="Assets\OutOfCirculation\Scripts\Item\Inventory.cs" />
     <Compile Include="Assets\OutOfCirculation\Scripts\Dialogue\MultiChoiceManager.cs" />
     <Compile Include="Assets\OutOfCirculation\Scripts\UI\UIToggleButton.cs" />
+    <Compile Include="Assets\Scripts\AnswersButtonsController.cs" />
     <Compile Include="Assets\OutOfCirculation\Scripts\UI\Theming\UIThemeBackground.cs" />
     <Compile Include="Assets\OutOfCirculation\Scripts\UI\Inventory\UIInventorySidebar.cs" />
     <Compile Include="Assets\OutOfCirculation\Scripts\GameStateManager.cs" />
