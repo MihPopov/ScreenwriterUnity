@@ -27,7 +27,7 @@ public class DataClass
     [field: SerializeField]
     public string line;
     [field: SerializeField]
-    public ToClass to;
+    public List<ToClass> to;
 }
 
 [Serializable]
