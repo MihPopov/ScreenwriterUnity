@@ -1,0 +1,18 @@
+[
+  {
+    "id": "charid",
+    "name": "charname",
+    "data" : [
+      {
+        "id": "1",
+        "line": "Phrase",
+        "to":
+        {
+          "id": "2",
+          "info": "Info",
+          "line": "Phrase"
+        }
+      }
+    ]
+  }
+]

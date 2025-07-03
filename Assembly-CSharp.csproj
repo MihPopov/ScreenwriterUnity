@@ -168,6 +168,7 @@
     <Compile Include="Assets\OutOfCirculation\Scripts\UI\UIItemUsePopup.cs" />
     <Compile Include="Assets\OutOfCirculation\Scripts\UI\Settings\ControlIconSelector.cs" />
     <Compile Include="Assets\OutOfCirculation\Scripts\Choices\BaseChoiceManager.cs" />
+    <Compile Include="Assets\Scripts\DialogController.cs" />
     <Compile Include="Assets\OutOfCirculation\Scripts\UI\UIControlCategoryHeader.cs" />
     <Compile Include="Assets\Scripts\Decoder.cs" />
     <Compile Include="Assets\UAP\Plugins\Android\AndroidTTS.cs" />

@@ -1,26 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 [Serializable]
-public class CharacterClass
+public class Characters
 {
-    public string Id;
-    public string Name;
-    public List<DataClass> Data;
+    public List<CharacterItem> chars;
+}
+
+[Serializable]
+public class CharacterItem
+{
+    [field: SerializeField]
+    public string id;
+    [field: SerializeField]
+    public string name;
+    [field: SerializeField]
+    public List<DataClass> data;
 }
 
 [Serializable]
 public class DataClass
 {
-    public string Id;
-    public string Line;
-    public ToClass To;
+    [field: SerializeField]
+    public string id;
+    [field: SerializeField]
+    public string line;
+    [field: SerializeField]
+    public ToClass to;
 }
 
 [Serializable]
 public class ToClass
 {
-    public string Id;
-    public string Info;
-    public string Line;
+    [field: SerializeField]
+    public string id;
+    [field: SerializeField]
+    public string info;
+    [field: SerializeField]
+    public string line;
 }
