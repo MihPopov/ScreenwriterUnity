@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour
    private void Start()
    {
       Cursor.lockState = CursorLockMode.Locked;
-      Cursor.visible = false;
       _cc = GetComponent<CharacterController>();
    }
 
@@ -26,10 +25,15 @@ public class PlayerController : MonoBehaviour
       float vertical = Input.GetAxis("Vertical");
       Vector3 forward = transform.forward * vertical;
       Vector3 right = transform.right * horizontal;
-      _angle += Input.GetAxis ("Mouse Y") * -sensitivityY * Time.deltaTime;
-      _angle = Mathf.Clamp (_angle, -cameraLimit, cameraLimit);
-      cam.transform.eulerAngles = new Vector3 (_angle, cam.transform.eulerAngles.y, cam.transform.eulerAngles.z);
-      transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X")*sensitivityX,0));
+
+      if (Time.timeScale == 1)
+      {
+          _angle += Input.GetAxis("Mouse Y") * -sensitivityY * Time.deltaTime;
+          _angle = Mathf.Clamp(_angle, -cameraLimit, cameraLimit);
+          cam.transform.eulerAngles = new Vector3(_angle, cam.transform.eulerAngles.y, cam.transform.eulerAngles.z);
+          transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X") * sensitivityX, 0));
+      }
+
       _cc.SimpleMove(Vector3.Normalize(forward + right) * speed);
    }
 }
