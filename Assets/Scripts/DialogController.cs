@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
@@ -20,8 +21,22 @@ public class DialogController : MonoBehaviour
         _chars = GameObject.FindObjectOfType<Decoder>().Characters;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            dialogPanel.SetActive(false);
+            if (DialogOpen) DialogOpen = false;
+            foreach (Transform c in dialogAnswerPanel.transform)
+            {
+                Destroy(c.gameObject); 
+            }
+        }
+    }
+
     private IEnumerator ShowWindow(int id, float duration)
     {
+        if (!DialogOpen) yield break;
         idx = id;
         yield return new WaitForSeconds(duration);
         dialogPanel.SetActive(true);
@@ -57,6 +72,7 @@ public class DialogController : MonoBehaviour
 
     public void ButtonClicked(int id)
     {
+        if (!DialogOpen) return;
         if (id == -2)
         {
             dialogPanel.SetActive(false);
@@ -90,7 +106,7 @@ public class DialogController : MonoBehaviour
         if (!other.CompareTag("Player")) return;
         if (DialogOpen) return;
         if (!Input.GetKeyDown(KeyCode.E)) return;
-        StartCoroutine(ShowWindow(_chars.chars[charId].data[0].id, 0));
         DialogOpen = true;
+        StartCoroutine(ShowWindow(_chars.chars[charId].data[0].id, 0));
     }
 }
