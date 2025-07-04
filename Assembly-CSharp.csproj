@@ -60,6 +60,7 @@
     <Compile Include="Assets\OutOfCirculation\Scripts\Audio\AudioManager.cs" />
     <Compile Include="Assets\OutOfCirculation\Scripts\Accessibility\AccessibilityHelper.cs" />
     <Compile Include="Assets\OutOfCirculation\Scripts\UI\Settings\UIScreen.cs" />
+    <Compile Include="Assets\Scripts\Settings.cs" />
     <Compile Include="Assets\OutOfCirculation\Scripts\Camera\ConversationCameraDistanceSettings.cs" />
     <Compile Include="Assets\OutOfCirculation\Scripts\Subtitles\TimelineSubtitles\SubtitleClip.cs" />
     <Compile Include="Assets\UAP\Scripts\UI Components\AccessibleLabel_3D.cs" />
