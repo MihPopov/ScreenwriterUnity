@@ -1,9 +1,10 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(BoxCollider))]
 public class CharacterGenerator : MonoBehaviour
-{ 
+{
     [SerializeField] private GameObject[] characterPrefabs;
     [SerializeField] private float spawnHeight = 0.24f;
     [SerializeField] private GameObject dialogPanel;
@@ -33,6 +34,7 @@ public class CharacterGenerator : MonoBehaviour
             dc.dialogLine = dialogLine;
             dc.dialogAnswerPrefab = dialogAnswerPrefab;
             dc.dialogName = dialogName;
+            spawned.transform.Find("Point").Find("Text").GetComponent<TMP_Text>().text = (i+1).ToString();  
         }
     }
 }
