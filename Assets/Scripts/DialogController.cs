@@ -33,7 +33,6 @@ public class DialogController : MonoBehaviour
         {
             if (d.id == id)
             {
-                print(d.id.ToString()+" " + id.ToString());
                 data = d;
             }
         }
@@ -69,8 +68,18 @@ public class DialogController : MonoBehaviour
         {
             Destroy(c.gameObject); 
         }
+        CharacterItem character = _chars.chars[charId];
+        DataClass data = character.data[idx];
+        foreach (var d in character.data)
+        {
+            if (d.id == idx)
+            {
+                data = d;
+            }
+        }
         dialogAnswerPanel.SetActive(false);
-        var to = _chars.chars[charId].data[idx].to[id];
+        print(idx.ToString());
+        var to = data.to[id];
         var text = to.line;
         dialogLine.text = text;
         StartCoroutine(ShowWindow(int.Parse(to.id), text.Length/7f));
