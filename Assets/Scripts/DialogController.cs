@@ -8,11 +8,11 @@ public class DialogController : MonoBehaviour
 {
     public int charId;
     public bool DialogOpen { get; private set; } = false;
-    [SerializeField] private GameObject dialogPanel;
-    [SerializeField] private GameObject dialogAnswerPanel;
-    [SerializeField] private Text dialogName;
-    [SerializeField] private Text dialogLine;
-    [SerializeField] private GameObject dialogAnswerPrefab;
+    public GameObject dialogPanel;
+    public GameObject dialogAnswerPanel;
+    public Text dialogName;
+    public Text dialogLine;
+    public GameObject dialogAnswerPrefab;
     private Characters _chars;
     private int idx = 0;
 
@@ -72,7 +72,8 @@ public class DialogController : MonoBehaviour
 
     public void ButtonClicked(int id)
     {
-        if (!DialogOpen) return;
+        Cursor.lockState = CursorLockMode.Locked;
+        if (!DialogOpen) return; 
         if (id == -2)
         {
             dialogPanel.SetActive(false);
@@ -94,10 +95,10 @@ public class DialogController : MonoBehaviour
             }
         }
         dialogAnswerPanel.SetActive(false);
-        print(idx.ToString());
         var to = data.to[id];
         var text = to.line;
         dialogLine.text = text;
+        dialogName.text = "Игрок";
         StartCoroutine(ShowWindow(int.Parse(to.id), text.Length/7f));
     }
 

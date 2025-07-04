@@ -51575,6 +51575,11 @@ MonoBehaviour:
   - {fileID: 4231455683388522410, guid: 4b96fbc62538bbc4da3bff10bceebe8f, type: 3}
   - {fileID: 4014777828477945538, guid: 427c38386be43bb40909e23988c10b4e, type: 3}
   spawnHeight: -1.1
+  dialogPanel: {fileID: 1539152719}
+  dialogAnswerPanel: {fileID: 823368348}
+  dialogName: {fileID: 499546988}
+  dialogLine: {fileID: 723885196}
+  dialogAnswerPrefab: {fileID: 1004214735066442770, guid: bb9b58a4d32eb6c4e81a6b8a9bc72ae7, type: 3}
 --- !u!65 &2115632546
 BoxCollider:
   m_ObjectHideFlags: 0

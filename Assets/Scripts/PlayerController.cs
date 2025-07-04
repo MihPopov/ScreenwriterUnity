@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
       Vector3 forward = transform.forward * vertical;
       Vector3 right = transform.right * horizontal;
 
-      if (Time.timeScale == 1)
+      if (Cursor.lockState == CursorLockMode.Locked)
       {
           _angle += Input.GetAxis("Mouse Y") * -sensitivityY * Time.deltaTime;
           _angle = Mathf.Clamp(_angle, -cameraLimit, cameraLimit);
