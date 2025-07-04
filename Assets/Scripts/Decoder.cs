@@ -5,7 +5,7 @@ public class Decoder : MonoBehaviour
 {
     public Characters Characters { get; private set; }
     
-    private void Start()
+    private void Awake()
     {
         string path = Application.dataPath + "/chars.json";
         StreamReader reader = new StreamReader(path);

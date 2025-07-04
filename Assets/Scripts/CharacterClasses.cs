@@ -12,7 +12,7 @@ public class Characters
 public class CharacterItem
 {
     [field: SerializeField]
-    public string id;
+    public int id;
     [field: SerializeField]
     public string name;
     [field: SerializeField]
@@ -23,7 +23,7 @@ public class CharacterItem
 public class DataClass
 {
     [field: SerializeField]
-    public string id;
+    public int id;
     [field: SerializeField]
     public string line;
     [field: SerializeField]

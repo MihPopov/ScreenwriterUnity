@@ -1,59 +1,87 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.TextCore.Text;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public class DialogController : MonoBehaviour
 {
+    public int charId;
+    public bool DialogOpen { get; private set; } = false;
     [SerializeField] private GameObject dialogPanel;
     [SerializeField] private GameObject dialogAnswerPanel;
     [SerializeField] private Text dialogName;
     [SerializeField] private Text dialogLine;
     [SerializeField] private GameObject dialogAnswerPrefab;
-    private AnswersButtonsController _answers = null;
     private Characters _chars;
-    private bool _isStarted = false;
-    private int _idx;
+    private int idx = 0;
 
     private void Start()
     {
         _chars = GameObject.FindObjectOfType<Decoder>().Characters;
     }
 
-    private void Update()
+    private IEnumerator ShowWindow(int id, float duration)
     {
-        if (!_answers) return;
-        if (_answers.btnIdx != -1)
-        {
-            
-        }
-    }
-
-    private void ShowWindow(int charId, int id)
-    {
+        idx = id;
+        yield return new WaitForSeconds(duration);
         dialogPanel.SetActive(true);
         var character = _chars.chars[charId];
         dialogName.text = character.name;
-        dialogLine.text = character.data[id].line;
+        
+        DataClass data = character.data[id];
+        foreach (var d in character.data)
+        {
+            if (d.id == id)
+            {
+                print(d.id.ToString()+" " + id.ToString());
+                data = d;
+            }
+        }
+        dialogLine.text = data.line;
         dialogAnswerPanel.SetActive(true);
-        var to = character.data[id].to;
-        foreach (var t in to)
+        var to = data.to;
+        Cursor.lockState = CursorLockMode.None;
+        if (to.Count == 0)
         {
             var obj = Instantiate(dialogAnswerPrefab, dialogAnswerPanel.transform);
-            obj.transform.Find("Text").GetComponent<Text>().text = t.info;
+            obj.GetComponent<AnswersButtonController>().btnIdx = -2;
+            obj.GetComponent<Text>().text = "Закончить диалог";
         }
+
+        for (int i = 0; i < to.Count; i++)
+        {
+            var obj = Instantiate(dialogAnswerPrefab, dialogAnswerPanel.transform);
+            obj.GetComponent<AnswersButtonController>().btnIdx = i;
+            obj.GetComponent<Text>().text = to[i].info;
+        }
+    }
+
+    public void ButtonClicked(int id)
+    {
+        if (id == -2)
+        {
+            dialogPanel.SetActive(false);
+            DialogOpen = false;
+            return;
+        }
+
+        foreach (Transform c in dialogAnswerPanel.transform)
+        {
+            Destroy(c.gameObject); 
+        }
+        dialogAnswerPanel.SetActive(false);
+        var to = _chars.chars[charId].data[idx].to[id];
+        var text = to.line;
+        dialogLine.text = text;
+        StartCoroutine(ShowWindow(int.Parse(to.id), text.Length/7f));
     }
 
     private void OnTriggerStay(Collider other)
     {
         if (!other.CompareTag("Player")) return;
-        if (_isStarted) return;
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            ShowWindow(0, 0);
-            _isStarted = true;
-        }
+        if (DialogOpen) return;
+        if (!Input.GetKeyDown(KeyCode.E)) return;
+        StartCoroutine(ShowWindow(_chars.chars[charId].data[0].id, 0));
+        DialogOpen = true;
     }
 }
