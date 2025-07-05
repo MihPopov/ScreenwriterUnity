@@ -15,10 +15,13 @@ public class DialogController : MonoBehaviour
     public GameObject dialogAnswerPrefab;
     private Characters _chars;
     private int idx = 0;
+    private int _finishedPhraseId = 0;
+
 
     private void Start()
     {
         _chars = GameObject.FindObjectOfType<Decoder>().Characters;
+        _finishedPhraseId = _chars.chars[charId].data[0].id;
     }
 
     private void Update()
@@ -26,7 +29,9 @@ public class DialogController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             dialogPanel.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
             if (DialogOpen) DialogOpen = false;
+            _finishedPhraseId = idx;
             foreach (Transform c in dialogAnswerPanel.transform)
             {
                 Destroy(c.gameObject); 
@@ -76,8 +81,13 @@ public class DialogController : MonoBehaviour
         if (!DialogOpen) return; 
         if (id == -2)
         {
+            foreach (Transform c in dialogAnswerPanel.transform)
+            {
+                Destroy(c.gameObject); 
+            }
             dialogPanel.SetActive(false);
             DialogOpen = false;
+            _finishedPhraseId = _chars.chars[charId].data[0].id;
             return;
         }
 
@@ -108,6 +118,6 @@ public class DialogController : MonoBehaviour
         if (DialogOpen) return;
         if (!Input.GetKeyDown(KeyCode.E)) return;
         DialogOpen = true;
-        StartCoroutine(ShowWindow(_chars.chars[charId].data[0].id, 0));
+        StartCoroutine(ShowWindow(_finishedPhraseId, 0));
     }
 }
