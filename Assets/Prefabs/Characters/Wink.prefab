@@ -836,6 +836,7 @@ GameObject:
   - component: {fileID: 4886471194283003960}
   - component: {fileID: 4808625306696585551}
   - component: {fileID: 2024525155527734700}
+  - component: {fileID: 4703719102968260154}
   m_Layer: 13
   m_Name: Wink
   m_TagString: Untagged
@@ -945,11 +946,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charId: 0
-  dialogPanel: {fileID: 0}
+  dialogLayout: {fileID: 0}
   dialogAnswerPanel: {fileID: 0}
+  characterPortrait: {fileID: 0}
   dialogName: {fileID: 0}
   dialogLine: {fileID: 0}
-  dialogAnswerPrefab: {fileID: 1004214735066442770, guid: bb9b58a4d32eb6c4e81a6b8a9bc72ae7, type: 3}
+  characterIcon: {fileID: 0}
+  dialogAnswerPrefab: {fileID: 2464844283014081249, guid: 1b4ba6d10fc6a1e4885781f3f637803e, type: 3}
+  buttonE: {fileID: 0}
+  buttonF: {fileID: 0}
 --- !u!54 &4808625306696585551
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -996,8 +1001,20 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1.1647289
-  m_Center: {x: 0, y: 0.8747289, z: 0}
+  m_Radius: 1.6665449
+  m_Center: {x: 0, y: 1.376545, z: 0}
+--- !u!114 &4703719102968260154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4231455683388522410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dddb30840cf03d4abdabbeceac21aac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4247138309392467850
 GameObject:
   m_ObjectHideFlags: 0

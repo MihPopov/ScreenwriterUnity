@@ -241,6 +241,7 @@ GameObject:
   - component: {fileID: 3808318314278500177}
   - component: {fileID: 1297007577972471638}
   - component: {fileID: 6792212817247982306}
+  - component: {fileID: 6588522836294987506}
   m_Layer: 0
   m_Name: Sophie
   m_TagString: Untagged
@@ -301,11 +302,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charId: 0
-  dialogPanel: {fileID: 0}
+  dialogLayout: {fileID: 0}
   dialogAnswerPanel: {fileID: 0}
+  characterPortrait: {fileID: 0}
   dialogName: {fileID: 0}
   dialogLine: {fileID: 0}
+  characterIcon: {fileID: 0}
   dialogAnswerPrefab: {fileID: 1004214735066442770, guid: bb9b58a4d32eb6c4e81a6b8a9bc72ae7, type: 3}
+  buttonE: {fileID: 0}
+  buttonF: {fileID: 0}
 --- !u!135 &1297007577972471638
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -325,8 +330,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.60831094
-  m_Center: {x: 0, y: 0.318311, z: 0}
+  m_Radius: 0.78006816
+  m_Center: {x: 0, y: 0.49006805, z: 0}
 --- !u!54 &6792212817247982306
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -354,6 +359,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &6588522836294987506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4240437960343823740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dddb30840cf03d4abdabbeceac21aac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4798819066989556516
 GameObject:
   m_ObjectHideFlags: 0

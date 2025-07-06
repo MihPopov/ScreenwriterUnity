@@ -22,9 +22,9 @@ public class MenuManager : MonoBehaviour
         pausePanel.SetActive(!pausePanel.activeSelf);
     }
 
-    public void Restart()
+    public void LoadScene(int index)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(index);
         Time.timeScale = 1;
     }
 }
