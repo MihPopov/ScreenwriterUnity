@@ -10,6 +10,7 @@ public class CharacterGenerator : MonoBehaviour
     [SerializeField] private Sprite[] characterIcons;
     [SerializeField] private float spawnHeight = -1.1f;
     [SerializeField] private float minDistanceCTC = 10f;
+    [SerializeField] private float checkRadius = 5f;
     [SerializeField] private GameObject dialogLayout;
     [SerializeField] private GameObject dialogAnswerPanel;
     [SerializeField] private Image characterPortrait;
@@ -18,6 +19,7 @@ public class CharacterGenerator : MonoBehaviour
     [SerializeField] private GameObject dialogAnswerPrefab;
     [SerializeField] private GameObject buttonE;
     [SerializeField] private GameObject buttonF;
+    [SerializeField] private InventoryManager inventoryManager;
     private BoxCollider _spawnArea;
     private int _charactersCount;
     private List<Vector3> characterPositions = new List<Vector3>();
@@ -35,7 +37,17 @@ public class CharacterGenerator : MonoBehaviour
             bool validPosition;
             do
             {
-                characterPos = new Vector3(Random.Range(-maxSpawnPos.x, maxSpawnPos.x), spawnHeight, Random.Range(-1.9f, 1.9f));
+                characterPos = new Vector3(Random.Range(-maxSpawnPos.x, maxSpawnPos.x), spawnHeight, Random.Range(-maxSpawnPos.z, maxSpawnPos.z));
+                bool noBuildingCollision = true;
+                Collider[] hitColliders = Physics.OverlapSphere(characterPos, checkRadius);
+                foreach (var hit in hitColliders)
+                {
+                    if (hit.CompareTag("Building"))
+                    {
+                        noBuildingCollision = false;
+                        break;
+                    }
+                }
                 validPosition = characterPositions.TrueForAll(existingCharacter =>
                 {
                     float distance = Vector2.Distance(
@@ -43,7 +55,7 @@ public class CharacterGenerator : MonoBehaviour
                         new Vector2(existingCharacter.x, existingCharacter.z)
                     );
                     return distance >= minDistanceCTC / _charactersCount;
-                });
+                }) && noBuildingCollision;
             }
             while (!validPosition);
             characterPositions.Add(characterPos);
@@ -61,6 +73,7 @@ public class CharacterGenerator : MonoBehaviour
             dc.characterIcon = characterIcons[n];
             dc.buttonE = buttonE;
             dc.buttonF = buttonF;
+            dc.inventoryManager = inventoryManager;
             spawned.transform.Find("Point").Find("Text").GetComponent<TMP_Text>().text = (i + 1).ToString();  
         }
     }

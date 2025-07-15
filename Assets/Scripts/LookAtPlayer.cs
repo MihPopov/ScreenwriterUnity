@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LookAtPlayer : MonoBehaviour {
 
+    [SerializeField] private float minDistance;
     private Transform player;
 
     void Start()

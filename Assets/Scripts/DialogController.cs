@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public class DialogController : MonoBehaviour
@@ -17,6 +16,7 @@ public class DialogController : MonoBehaviour
     public GameObject dialogAnswerPrefab;
     public GameObject buttonE;
     public GameObject buttonF;
+    public InventoryManager inventoryManager;
     private Characters _chars;
     private int idx = 0;
     private int _finishedPhraseId = 0;
@@ -24,13 +24,13 @@ public class DialogController : MonoBehaviour
 
     private void Start()
     {
-        _chars = GameObject.FindObjectOfType<Decoder>().Characters;
+        _chars = FindObjectOfType<Decoder>().Characters;
         _finishedPhraseId = _chars.chars[charId].data[0].id;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && dialogLayout.activeSelf)
         {
             buttonF.SetActive(false);
             dialogLayout.SetActive(false);
@@ -106,6 +106,8 @@ public class DialogController : MonoBehaviour
             DialogOpen = false;
             buttonF.SetActive(false);
             buttonE.SetActive(true);
+            inventoryManager.AddItem("Ключ", "Какой-то ключ", Resources.Load<Sprite>("Textures/key"));
+            inventoryManager.UpdateInventory();
             _finishedPhraseId = _chars.chars[charId].data[0].id;
             return;
         }

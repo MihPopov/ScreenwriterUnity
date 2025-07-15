@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float deltaY = 1f;
     [SerializeField] private GameObject dialogLayout;
     [SerializeField] private Camera cam;
+    private InventoryManager inventoryManager;
     private float _angle;
     private float _verticalVelocity;
     private CharacterController _cc;
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         _cc = GetComponent<CharacterController>();
+        inventoryManager = FindObjectOfType<InventoryManager>();
     }
 
     private void Update()
@@ -63,5 +66,14 @@ public class PlayerController : MonoBehaviour
         moveDirection.y = _verticalVelocity;
 
         _cc.Move(moveDirection * Time.deltaTime);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("LibEnter"))
+        {
+            if (inventoryManager.HasItem("Ключ")) SceneManager.LoadScene(3);
+        }
+        if (other.CompareTag("LibExit")) SceneManager.LoadScene(2);
     }
 }

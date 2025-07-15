@@ -311,6 +311,7 @@ MonoBehaviour:
   dialogAnswerPrefab: {fileID: 1004214735066442770, guid: bb9b58a4d32eb6c4e81a6b8a9bc72ae7, type: 3}
   buttonE: {fileID: 0}
   buttonF: {fileID: 0}
+  inventoryManager: {fileID: 0}
 --- !u!135 &1297007577972471638
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -932,7 +933,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.17106466, y: -0.6861027, z: 0.6861027, w: 0.17106466}
   m_LocalPosition: {x: 0, y: 330, z: 0}
-  m_LocalScale: {x: 0.78, y: 0.8210526, z: 0.8210526}
+  m_LocalScale: {x: 1.6150001, y: 1.7000002, z: 1.7000002}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1831417642395302598}

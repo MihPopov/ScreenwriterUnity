@@ -6,20 +6,39 @@ using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject inventoryPanel;
+    [SerializeField] private GameObject mapPanel;
+    [SerializeField] private GameObject dialogLayout;
+    [SerializeField] private GameObject characterPortrait;
 
-    void Update()
+    void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
+        foreach (AudioSource audioSource in audioSources)
         {
-            Pause();
+            audioSource.volume = PlayerPrefs.GetFloat("Volume", 0.5f);
         }
     }
 
-    public void Pause()
+    void Update()
     {
-        Cursor.lockState = pausePanel.activeSelf ? CursorLockMode.Locked : CursorLockMode.None;
-        Time.timeScale = pausePanel.activeSelf ? 1 : 0;
-        pausePanel.SetActive(!pausePanel.activeSelf);
+        if (Input.GetKeyDown(KeyCode.Escape) && !inventoryPanel.activeSelf && !mapPanel.activeSelf) Pause(pausePanel);
+        else if (Input.GetKeyDown(KeyCode.I) && !pausePanel.activeSelf && !mapPanel.activeSelf) Pause(inventoryPanel);
+        else if (Input.GetKeyDown(KeyCode.M) && !pausePanel.activeSelf && !inventoryPanel.activeSelf) Pause(mapPanel);
+    }
+
+    public void Pause(GameObject panel)
+    {
+        Cursor.lockState = panel.activeSelf ? CursorLockMode.Locked : CursorLockMode.None;
+        Time.timeScale = panel.activeSelf ? 1 : 0;
+        AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
+        float volume = PlayerPrefs.GetFloat("Volume", 0.5f);
+        foreach (AudioSource audioSource in audioSources)
+        {
+            audioSource.volume = panel.activeSelf ? volume : volume / 2;
+        }
+        panel.SetActive(!panel.activeSelf);
+        if (dialogLayout.activeSelf && characterPortrait.activeSelf) Cursor.lockState = CursorLockMode.None;
     }
 
     public void LoadScene(int index)
