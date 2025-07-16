@@ -1,31 +1,32 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DialogController : MonoBehaviour
 {
-    public int charId;
+    public int sceneId;
     public bool DialogOpen { get; private set; } = false;
+
     public GameObject dialogLayout;
     public GameObject dialogAnswerPanel;
     public Image characterPortrait;
     public Text dialogName;
     public Text dialogLine;
-    public Sprite characterIcon; 
+    public Sprite characterIcon;
     public GameObject dialogAnswerPrefab;
     public GameObject buttonE;
     public GameObject buttonF;
     public InventoryManager inventoryManager;
-    private Characters _chars;
-    private int idx = 0;
-    private int _finishedPhraseId = 0;
+
+    private List<MyScene> _scenes;
+    private DialogueNode currentNode;
     private Coroutine currentCoroutine;
 
     private void Start()
     {
-        _chars = FindObjectOfType<Decoder>().Characters;
-        _finishedPhraseId = _chars.chars[charId].data[0].id;
+        _scenes = FindObjectOfType<Decoder>().MyScenes.scene;
+        currentNode = _scenes[sceneId].data[0];
     }
 
     private void Update()
@@ -36,112 +37,109 @@ public class DialogController : MonoBehaviour
             dialogLayout.SetActive(false);
             buttonE.SetActive(true);
             Cursor.lockState = CursorLockMode.Locked;
-            if (DialogOpen) DialogOpen = false;
+            DialogOpen = false;
+
             if (currentCoroutine != null)
             {
                 StopCoroutine(currentCoroutine);
                 currentCoroutine = null;
             }
-            foreach (Transform c in dialogAnswerPanel.transform)
-            {
-                Destroy(c.gameObject);
-            }
+
+            foreach (Transform child in dialogAnswerPanel.transform) Destroy(child.gameObject);
         }
     }
 
-
-    private IEnumerator ShowWindow(int id, float duration)
+    private IEnumerator ShowWindow(int id, float delay)
     {
         if (!DialogOpen) yield break;
-        idx = id;
-        yield return new WaitForSeconds(duration);
-
+        yield return new WaitForSeconds(delay);
         if (!DialogOpen) yield break;
+        foreach (Transform child in dialogAnswerPanel.transform) Destroy(child.gameObject);
 
-        foreach (Transform c in dialogAnswerPanel.transform)
-        {
-            Destroy(c.gameObject);
-        }
+        var scene = _scenes[sceneId];
+        currentNode = scene.data.Find(n => n.id == id);
 
         characterPortrait.sprite = characterIcon;
-        dialogLayout.SetActive(true);
         characterPortrait.gameObject.SetActive(true);
-        var character = _chars.chars[charId];
-        dialogName.text = character.name;
-        DataClass data = character.data.Find(d => d.id == id);
-        dialogLine.text = data.line;
+        dialogLayout.SetActive(true);
+        dialogName.text = scene.npc_name;
+        dialogLine.text = currentNode.line;
 
         dialogAnswerPanel.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
 
-        if (data.to.Count == 0)
+        if (currentNode.to == null || currentNode.to.Count == 0)
         {
-            var obj = Instantiate(dialogAnswerPrefab, dialogAnswerPanel.transform);
-            obj.GetComponent<AnswersButtonController>().btnIdx = -2;
-            obj.transform.GetChild(0).GetComponent<Text>().text = "Закончить диалог";
+            var btn = Instantiate(dialogAnswerPrefab, dialogAnswerPanel.transform);
+            btn.GetComponent<AnswersButtonController>().btnIdx = -2;
+            btn.transform.GetChild(0).GetComponent<Text>().text = "Закончить диалог";
         }
         else
         {
-            for (int i = 0; i < data.to.Count; i++)
+            for (int i = 0; i < currentNode.to.Count; i++)
             {
-                var obj = Instantiate(dialogAnswerPrefab, dialogAnswerPanel.transform);
-                obj.GetComponent<AnswersButtonController>().btnIdx = i;
-                obj.transform.GetChild(0).GetComponent<Text>().text = data.to[i].info;
+                var btn = Instantiate(dialogAnswerPrefab, dialogAnswerPanel.transform);
+                btn.GetComponent<AnswersButtonController>().btnIdx = i;
+                btn.transform.GetChild(0).GetComponent<Text>().text = currentNode.to[i].info;
             }
         }
     }
 
     public void ButtonClicked(int id)
     {
-        Cursor.lockState = CursorLockMode.Locked;
         if (!DialogOpen) return;
-
+        foreach (Transform child in dialogAnswerPanel.transform) Destroy(child.gameObject);
         if (id == -2)
         {
-            foreach (Transform c in dialogAnswerPanel.transform)
-            {
-                Destroy(c.gameObject);
-            }
             dialogLayout.SetActive(false);
             DialogOpen = false;
             buttonF.SetActive(false);
             buttonE.SetActive(true);
-            inventoryManager.AddItem("Ключ", "Какой-то ключ", Resources.Load<Sprite>("Textures/key"));
-            inventoryManager.UpdateInventory();
-            _finishedPhraseId = _chars.chars[charId].data[0].id;
+
+            if (!inventoryManager.HasItem("Ключ"))
+            {
+                inventoryManager.AddItem("Ключ", "Какой-то ключ", Resources.Load<Sprite>("Textures/key"));
+                inventoryManager.UpdateInventory();
+            }
+
+            currentNode = _scenes[sceneId].data[0];
+            Cursor.lockState = CursorLockMode.Locked;
             return;
         }
 
-        foreach (Transform c in dialogAnswerPanel.transform)
+        if (id == -3)
         {
-            Destroy(c.gameObject);
+            dialogAnswerPanel.SetActive(false);
+            characterPortrait.gameObject.SetActive(true);
+            if (currentCoroutine != null) StopCoroutine(currentCoroutine);
+            currentCoroutine = StartCoroutine(ShowWindow(currentNode.id, 0));
+            return;
         }
 
-        CharacterItem character = _chars.chars[charId];
-        DataClass data = character.data.Find(d => d.id == idx);
+        var response = currentNode.to[id];
+        dialogLine.text = response.line;
+        dialogName.text = _scenes[sceneId].hero_name;
 
-        dialogAnswerPanel.SetActive(false);
+        currentNode = _scenes[sceneId].data.Find(n => n.id == response.id);
+
+        var btnNext = Instantiate(dialogAnswerPrefab, dialogAnswerPanel.transform);
+        btnNext.GetComponent<AnswersButtonController>().btnIdx = -3;
+        btnNext.transform.GetChild(0).GetComponent<Text>().text = "Продолжить диалог";
+        dialogAnswerPanel.SetActive(true);
+        dialogAnswerPanel.SetActive(true);
         characterPortrait.gameObject.SetActive(false);
-        var to = data.to[id];
-        dialogLine.text = to.line;
-        dialogName.text = "Игрок";
-
-        _finishedPhraseId = int.Parse(to.id);
-        if (currentCoroutine != null) StopCoroutine(currentCoroutine);
-        currentCoroutine = StartCoroutine(ShowWindow(_finishedPhraseId, to.line.Length / 10f));
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (!other.CompareTag("Player")) return;
-        if (DialogOpen) return;
+        if (!other.CompareTag("Player") || DialogOpen) return;
         if (Input.GetKey(KeyCode.E))
         {
             DialogOpen = true;
             buttonE.SetActive(false);
             buttonF.SetActive(true);
             if (currentCoroutine != null) StopCoroutine(currentCoroutine);
-            currentCoroutine = StartCoroutine(ShowWindow(_finishedPhraseId, 0));
+            currentCoroutine = StartCoroutine(ShowWindow(currentNode.id, 0));
         }
     }
 

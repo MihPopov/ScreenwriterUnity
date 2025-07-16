@@ -11,6 +11,8 @@ public class CharacterGenerator : MonoBehaviour
     [SerializeField] private float spawnHeight = -1.1f;
     [SerializeField] private float minDistanceCTC = 10f;
     [SerializeField] private float checkRadius = 5f;
+
+    [Header("Dialog UI")]
     [SerializeField] private GameObject dialogLayout;
     [SerializeField] private GameObject dialogAnswerPanel;
     [SerializeField] private Image characterPortrait;
@@ -20,24 +22,30 @@ public class CharacterGenerator : MonoBehaviour
     [SerializeField] private GameObject buttonE;
     [SerializeField] private GameObject buttonF;
     [SerializeField] private InventoryManager inventoryManager;
+
     private BoxCollider _spawnArea;
-    private int _charactersCount;
+    private int _sceneCount;
     private List<Vector3> characterPositions = new List<Vector3>();
 
     void Start()
     {
-        _charactersCount = FindObjectOfType<Decoder>().Characters.chars.Count;
+        List<MyScene> scenes = FindObjectOfType<Decoder>().MyScenes.scene;
+        _sceneCount = scenes.Count;
         _spawnArea = GetComponent<BoxCollider>();
-
         Vector3 maxSpawnPos = new Vector3(_spawnArea.size.x / 2, _spawnArea.size.y / 2, _spawnArea.size.z / 2);
-        for (int i = 0; i < _charactersCount; i++)
+
+        for (int i = 0; i < _sceneCount; i++)
         {
-            int n = Random.Range(0, characterPrefabs.Length);
+            int prefabIndex = Random.Range(0, characterPrefabs.Length);
             Vector3 characterPos;
             bool validPosition;
             do
             {
-                characterPos = new Vector3(Random.Range(-maxSpawnPos.x, maxSpawnPos.x), spawnHeight, Random.Range(-maxSpawnPos.z, maxSpawnPos.z));
+                characterPos = new Vector3(
+                    Random.Range(-maxSpawnPos.x, maxSpawnPos.x),
+                    spawnHeight,
+                    Random.Range(-maxSpawnPos.z, maxSpawnPos.z)
+                );
                 bool noBuildingCollision = true;
                 Collider[] hitColliders = Physics.OverlapSphere(characterPos, checkRadius);
                 foreach (var hit in hitColliders)
@@ -48,33 +56,34 @@ public class CharacterGenerator : MonoBehaviour
                         break;
                     }
                 }
-                validPosition = characterPositions.TrueForAll(existingCharacter =>
+                validPosition = characterPositions.TrueForAll(existing =>
                 {
                     float distance = Vector2.Distance(
                         new Vector2(characterPos.x, characterPos.z),
-                        new Vector2(existingCharacter.x, existingCharacter.z)
+                        new Vector2(existing.x, existing.z)
                     );
-                    return distance >= minDistanceCTC / _charactersCount;
+                    return distance >= minDistanceCTC / _sceneCount;
                 }) && noBuildingCollision;
-            }
-            while (!validPosition);
+
+            } while (!validPosition);
+
             characterPositions.Add(characterPos);
-            GameObject spawned = Instantiate(characterPrefabs[n], Vector3.zero, Quaternion.identity);
+            GameObject spawned = Instantiate(characterPrefabs[prefabIndex], Vector3.zero, Quaternion.identity);
             spawned.transform.parent = transform;
             spawned.transform.localPosition = characterPos;
             DialogController dc = spawned.GetComponent<DialogController>();
-            dc.charId = i;
+            dc.sceneId = i;
             dc.dialogLayout = dialogLayout;
             dc.dialogAnswerPanel = dialogAnswerPanel;
             dc.dialogLine = dialogLine;
             dc.dialogAnswerPrefab = dialogAnswerPrefab;
             dc.dialogName = dialogName;
             dc.characterPortrait = characterPortrait;
-            dc.characterIcon = characterIcons[n];
+            dc.characterIcon = characterIcons[prefabIndex];
             dc.buttonE = buttonE;
             dc.buttonF = buttonF;
             dc.inventoryManager = inventoryManager;
-            spawned.transform.Find("Point").Find("Text").GetComponent<TMP_Text>().text = (i + 1).ToString();  
+            spawned.transform.Find("Point").Find("Text").GetComponent<TMP_Text>().text = (i + 1).ToString();
         }
     }
 }

@@ -3,14 +3,14 @@ using UnityEngine;
 
 public class Decoder : MonoBehaviour
 {
-    public Characters Characters { get; private set; }
+    public MyScenes MyScenes { get; private set; }
     
     private void Awake()
     {
-        string path = Application.dataPath + "/chars.json";
+        string path = Application.dataPath + "/scene.json";
         StreamReader reader = new StreamReader(path);
         var str = reader.ReadToEnd();
         reader.Close();
-        Characters = JsonUtility.FromJson<Characters>("{\"chars\":" + str + "}");
+        MyScenes = JsonUtility.FromJson<MyScenes>("{\"scene\":" + str + "}");
     }
 }

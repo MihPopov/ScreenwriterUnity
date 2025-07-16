@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,7 +7,6 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject inventoryPanel;
     [SerializeField] private GameObject mapPanel;
     [SerializeField] private GameObject dialogLayout;
-    [SerializeField] private GameObject characterPortrait;
 
     void Start()
     {
@@ -38,7 +35,7 @@ public class MenuManager : MonoBehaviour
             audioSource.volume = panel.activeSelf ? volume : volume / 2;
         }
         panel.SetActive(!panel.activeSelf);
-        if (dialogLayout.activeSelf && characterPortrait.activeSelf) Cursor.lockState = CursorLockMode.None;
+        if (dialogLayout.activeSelf && dialogLayout.activeSelf) Cursor.lockState = CursorLockMode.None;
     }
 
     public void LoadScene(int index)

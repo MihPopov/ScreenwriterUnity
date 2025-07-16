@@ -66,10 +66,7 @@ public class MapGenerator : MonoBehaviour
             foreach (Vector3Int dir in directions)
             {
                 Vector3Int neighbor = currentCell + dir;
-                if (IsInBounds(neighbor) && !map[neighbor.x, neighbor.z])
-                {
-                    neighbors.Add(neighbor);
-                }
+                if (IsInBounds(neighbor) && !map[neighbor.x, neighbor.z]) neighbors.Add(neighbor);
             }
 
             if (neighbors.Count > 0)
@@ -80,14 +77,11 @@ public class MapGenerator : MonoBehaviour
                 map[chosenNeighbor.x, chosenNeighbor.z] = true;
                 activeCells.Add(chosenNeighbor);
             }
-            else
-            {
-                activeCells.Remove(currentCell);
-            }
+            else activeCells.Remove(currentCell);
         }
 
         Vector3Int center = GetCenterCell();
-        bool libraryPlaced = false;
+        bool siriusPlaced = false;
         for (int x = 0; x < width; x++)
         {
             for (int z = 0; z < height; z++)
@@ -109,7 +103,7 @@ public class MapGenerator : MonoBehaviour
                         Instantiate(borderPrefab, position, rotation, transform);
                     }
                 }
-                else if (x == width - 2 && z == height - 2 && !libraryPlaced)
+                else if (x == width - 2 && z == height - 2 && !siriusPlaced)
                 {
                     GameObject building = Instantiate(buildingPrefabs[4], position, Quaternion.identity, transform);
                     foreach (Transform child in building.transform)
@@ -139,13 +133,21 @@ public class MapGenerator : MonoBehaviour
                 else
                 {
                     int n;
-                    if (!libraryPlaced && Random.Range(0f, 1f) < 0.1f)
+                    if (!siriusPlaced && Random.Range(0f, 1f) < 0.1f)
                     {
                         n = 4;
-                        libraryPlaced = true;
+                        siriusPlaced = true;
                     }
                     else n = Random.Range(0, buildingPrefabs.Length - 1);
                     GameObject building = Instantiate(buildingPrefabs[n], position, Quaternion.identity, transform);
+                    if (n == 3)
+                    {
+                        Transform tree = building.transform.Find("Street_Tree");
+                        float randomY = Random.Range(3f, 9f);
+                        float scaleX = 6f * randomY / 7.5f;
+                        float scaleZ = scaleX * 2f;
+                        tree.localScale = new Vector3(scaleX, randomY, scaleZ);
+                    }
                     foreach (Transform child in building.transform)
                     {
                         if (child.name.StartsWith("Build"))

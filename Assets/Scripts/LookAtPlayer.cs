@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LookAtPlayer : MonoBehaviour {
 
-    [SerializeField] private float minDistance;
+    [SerializeField] private float maxDistance;
     private Transform player;
 
     void Start()
@@ -15,6 +15,6 @@ public class LookAtPlayer : MonoBehaviour {
     {
         Vector3 direction = player.position - transform.position;
         direction.y = 0;
-        if (direction != Vector3.zero) transform.rotation = Quaternion.LookRotation(direction);
+        if (direction != Vector3.zero && Vector3.Distance(player.position, transform.position) <= maxDistance) transform.rotation = Quaternion.LookRotation(direction);
     }
 }

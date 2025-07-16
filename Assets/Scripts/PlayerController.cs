@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     private InventoryManager inventoryManager;
     private float _angle;
     private float _verticalVelocity;
+    private Vector3 siriusPosition;
     private CharacterController _cc;
 
     private void Start()
@@ -72,8 +73,21 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("LibEnter"))
         {
-            if (inventoryManager.HasItem("Ключ")) SceneManager.LoadScene(3);
+            siriusPosition = other.transform.position + new Vector3(0f, 0f, 3f);
+            if (inventoryManager.HasItem("Ключ"))
+            {
+                Teleport(new Vector3(-503f, -499f, -499f));
+                other.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+            }
         }
-        if (other.CompareTag("LibExit")) SceneManager.LoadScene(2);
+        if (other.CompareTag("LibExit")) Teleport(siriusPosition);
+    }
+
+
+    void Teleport(Vector3 position)
+    {
+        if (_cc != null) _cc.enabled = false;
+        gameObject.transform.position = position;
+        if (_cc != null) _cc.enabled = true;
     }
 }
