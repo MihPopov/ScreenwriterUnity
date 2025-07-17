@@ -15,8 +15,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float cameraLimit = 60f;
     [SerializeField] private float deltaY = 1f;
     [SerializeField] private GameObject dialogLayout;
+    [SerializeField] private GameObject screamer;
     [SerializeField] private Camera cam;
     private InventoryManager inventoryManager;
+    private CountdownTimer countdownTimer;
     private float _angle;
     private float _verticalVelocity;
     private Vector3 siriusPosition;
@@ -27,6 +29,7 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         _cc = GetComponent<CharacterController>();
         inventoryManager = FindObjectOfType<InventoryManager>();
+        countdownTimer = FindObjectOfType<CountdownTimer>();
     }
 
     private void Update()
@@ -59,14 +62,11 @@ public class PlayerController : MonoBehaviour
         }
         else _verticalVelocity -= gravity * Time.deltaTime;
 
-        if (dialogLayout.activeSelf)
+        if (!dialogLayout.activeSelf && !screamer.activeSelf)
         {
-            moveDirection.x = 0f;
-            moveDirection.z = 0f;
+            moveDirection.y = _verticalVelocity;
+            _cc.Move(moveDirection * Time.deltaTime);
         }
-        moveDirection.y = _verticalVelocity;
-
-        _cc.Move(moveDirection * Time.deltaTime);
     }
 
     private void OnTriggerStay(Collider other)
@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("LibEnter"))
         {
             siriusPosition = other.transform.position + new Vector3(0f, 0f, 3f);
-            if (inventoryManager.HasItem("Ключ"))
+            if (inventoryManager.HasItem("Ключ") && (countdownTimer.timeRemaining <= 0 || PlayerPrefs.GetInt("GameMode", 0) == 0))
             {
                 Teleport(new Vector3(-503f, -499f, -499f));
                 other.transform.rotation = Quaternion.Euler(0f, 90f, 0f);

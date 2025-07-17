@@ -95,13 +95,6 @@ public class DialogController : MonoBehaviour
             DialogOpen = false;
             buttonF.SetActive(false);
             buttonE.SetActive(true);
-
-            if (!inventoryManager.HasItem("Ключ"))
-            {
-                inventoryManager.AddItem("Ключ", "Какой-то ключ", Resources.Load<Sprite>("Textures/key"));
-                inventoryManager.UpdateInventory();
-            }
-
             currentNode = _scenes[sceneId].data[0];
             Cursor.lockState = CursorLockMode.Locked;
             return;
@@ -121,6 +114,11 @@ public class DialogController : MonoBehaviour
         dialogName.text = _scenes[sceneId].hero_name;
 
         currentNode = _scenes[sceneId].data.Find(n => n.id == response.id);
+        if (currentNode.goal_achieve == 1 && !inventoryManager.HasItem("Ключ"))
+        {
+            inventoryManager.AddItem("Ключ", "Какой-то ключ", Resources.Load<Sprite>("Textures/key"));
+            inventoryManager.UpdateInventory();
+        }
 
         var btnNext = Instantiate(dialogAnswerPrefab, dialogAnswerPanel.transform);
         btnNext.GetComponent<AnswersButtonController>().btnIdx = -3;

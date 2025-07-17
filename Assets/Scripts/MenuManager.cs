@@ -7,6 +7,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject inventoryPanel;
     [SerializeField] private GameObject mapPanel;
     [SerializeField] private GameObject dialogLayout;
+    [SerializeField] private GameObject screamer;
 
     void Start()
     {
@@ -19,9 +20,9 @@ public class MenuManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !inventoryPanel.activeSelf && !mapPanel.activeSelf) Pause(pausePanel);
-        else if (Input.GetKeyDown(KeyCode.I) && !pausePanel.activeSelf && !mapPanel.activeSelf) Pause(inventoryPanel);
-        else if (Input.GetKeyDown(KeyCode.M) && !pausePanel.activeSelf && !inventoryPanel.activeSelf) Pause(mapPanel);
+        if (Input.GetKeyDown(KeyCode.Escape) && !inventoryPanel.activeSelf && !mapPanel.activeSelf && !screamer.activeSelf) Pause(pausePanel);
+        else if (Input.GetKeyDown(KeyCode.I) && !pausePanel.activeSelf && !mapPanel.activeSelf && !screamer.activeSelf) Pause(inventoryPanel);
+        else if (Input.GetKeyDown(KeyCode.M) && !pausePanel.activeSelf && !inventoryPanel.activeSelf && PlayerPrefs.GetInt("GameMode", 0) == 0 && !screamer.activeSelf) Pause(mapPanel);
     }
 
     public void Pause(GameObject panel)
