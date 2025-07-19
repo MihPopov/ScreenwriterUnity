@@ -22,10 +22,17 @@ public class DialogueNode
     public string info;
     public string type;
     public string mood;
-    public int goal_achieve;
+    public GoalAchieved goal_achieved;
     public string line;
     public MetaData meta;
     public List<DialogueLink> to;
+}
+
+[Serializable]
+public class GoalAchieved
+{
+    public int item;
+    public int info;
 }
 
 [Serializable]

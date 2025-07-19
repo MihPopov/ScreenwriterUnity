@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using AYellowpaper.SerializedCollections;
 
 public class DialogController : MonoBehaviour
 {
@@ -17,16 +19,21 @@ public class DialogController : MonoBehaviour
     public GameObject dialogAnswerPrefab;
     public GameObject buttonE;
     public GameObject buttonF;
-    public InventoryManager inventoryManager;
+    [SerializedDictionary("ItemID", "InventoryItem")]
+    public SerializedDictionary<int, InventoryItem> items;
 
+    private InventoryManager inventoryManager;
     private List<MyScene> _scenes;
     private DialogueNode currentNode;
     private Coroutine currentCoroutine;
+    private ParkourEvents parkourEvents;
 
     private void Start()
     {
         _scenes = FindObjectOfType<Decoder>().MyScenes.scene;
         currentNode = _scenes[sceneId].data[0];
+        parkourEvents = FindObjectOfType<ParkourEvents>();
+        inventoryManager = FindObjectOfType<InventoryManager>();
     }
 
     private void Update()
@@ -114,10 +121,25 @@ public class DialogController : MonoBehaviour
         dialogName.text = _scenes[sceneId].hero_name;
 
         currentNode = _scenes[sceneId].data.Find(n => n.id == response.id);
-        if (currentNode.goal_achieve == 1 && !inventoryManager.HasItem("Ключ"))
+        GoalAchieved goalAchieved = currentNode.goal_achieved;
+        if (goalAchieved.item != -1 && !inventoryManager.HasItem(items[goalAchieved.item].name))
         {
-            inventoryManager.AddItem("Ключ", "Какой-то ключ", Resources.Load<Sprite>("Textures/key"));
+            if (parkourEvents != null) parkourEvents.ShowPart2();
+            InventoryItem item = items[goalAchieved.item];
+            inventoryManager.AddItem(item);
             inventoryManager.UpdateInventory();
+            if (SceneManager.GetActiveScene().name == "Horror")
+            {
+                buttonF.SetActive(false);
+                dialogLayout.SetActive(false);
+                Cursor.lockState = CursorLockMode.Locked;
+                if (currentCoroutine != null)
+                {
+                    StopCoroutine(currentCoroutine);
+                    currentCoroutine = null;
+                }
+                Destroy(gameObject);
+            }
         }
 
         var btnNext = Instantiate(dialogAnswerPrefab, dialogAnswerPanel.transform);

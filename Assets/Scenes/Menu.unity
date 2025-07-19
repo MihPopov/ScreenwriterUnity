@@ -603,6 +603,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pausePanel: {fileID: 0}
+  inventoryPanel: {fileID: 0}
+  mapPanel: {fileID: 0}
+  dialogLayout: {fileID: 0}
+  screamer: {fileID: 0}
 --- !u!1 &1236280687
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,12 +904,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 963194230}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 3
+        m_MethodName: SwitchMode
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0

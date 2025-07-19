@@ -22,6 +22,7 @@ public class LanternController : MonoBehaviour
     [Header("UI")]
     [SerializeField] private Image holdProgressImage;
     [SerializeField] private GameObject buttonE;
+    [SerializeField] private SingleCharacterSpawner characterSpawner;
     [SerializeField] private AudioSource enableSound;
     [SerializeField] private AudioSource disableSound;
     [SerializeField] private AudioSource brokeSound;
@@ -29,6 +30,7 @@ public class LanternController : MonoBehaviour
     public bool isLit = false;
     private float lightTimer = 0f;
     private float time = 0f;
+    private bool isFirstEnabled = false;
     private Transform playerCamera;
 
     void Start()
@@ -48,7 +50,15 @@ public class LanternController : MonoBehaviour
         {
             holdTimer += Time.deltaTime;
             if (holdProgressImage != null) holdProgressImage.fillAmount = holdTimer / holdTime;
-            if (holdTimer >= holdTime && !isLit) TurnOnLantern();
+            if (holdTimer >= holdTime && !isLit)
+            {
+                if (!isFirstEnabled)
+                {
+                    characterSpawner.Spawn();
+                    isFirstEnabled = true;
+                }
+                TurnOnLantern();
+            }
         }
         else
         {

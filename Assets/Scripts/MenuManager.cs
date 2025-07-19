@@ -7,6 +7,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject inventoryPanel;
     [SerializeField] private GameObject mapPanel;
     [SerializeField] private GameObject dialogLayout;
+    [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject screamer;
 
     void Start()
@@ -20,9 +21,12 @@ public class MenuManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !inventoryPanel.activeSelf && !mapPanel.activeSelf && !screamer.activeSelf) Pause(pausePanel);
-        else if (Input.GetKeyDown(KeyCode.I) && !pausePanel.activeSelf && !mapPanel.activeSelf && !screamer.activeSelf) Pause(inventoryPanel);
-        else if (Input.GetKeyDown(KeyCode.M) && !pausePanel.activeSelf && !inventoryPanel.activeSelf && PlayerPrefs.GetInt("GameMode", 0) == 0 && !screamer.activeSelf) Pause(mapPanel);
+        if (gameOverPanel == null || !gameOverPanel.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape) && !inventoryPanel.activeSelf && !mapPanel.activeSelf && !screamer.activeSelf) Pause(pausePanel);
+            else if (Input.GetKeyDown(KeyCode.I) && !pausePanel.activeSelf && !mapPanel.activeSelf && !screamer.activeSelf) Pause(inventoryPanel);
+            else if (Input.GetKeyDown(KeyCode.M) && !pausePanel.activeSelf && !inventoryPanel.activeSelf && PlayerPrefs.GetInt("GameMode", 0) == 0 && !screamer.activeSelf) Pause(mapPanel);
+        }
     }
 
     public void Pause(GameObject panel)
@@ -43,5 +47,11 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene(index);
         Time.timeScale = 1;
+    }
+
+    public void SwitchMode()
+    {
+        if (PlayerPrefs.GetInt("GameMode", 0) == 0) LoadScene(2);
+        else LoadScene(3);
     }
 }

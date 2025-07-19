@@ -1,12 +1,12 @@
 using System;
 using UnityEngine;
 
-[Serializable]
-public class InventoryItem
+[CreateAssetMenu(menuName = "Inventory/Item")]
+public class InventoryItem : ScriptableObject
 {
-    public string name { private set; get; }
-    public string description { private set; get; }
-    public Sprite icon { private set; get; }
+    public string name;
+    public string description;
+    public Sprite icon;
 
     public InventoryItem(string name, string description, Sprite icon)
     {

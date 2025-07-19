@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
@@ -17,6 +15,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject dialogLayout;
     [SerializeField] private GameObject screamer;
     [SerializeField] private Camera cam;
+    private Vector3 externalPlatformMotion = Vector3.zero;
+    private Vector3 slidingForce = Vector3.zero;
     private InventoryManager inventoryManager;
     private CountdownTimer countdownTimer;
     private float _angle;
@@ -64,8 +64,12 @@ public class PlayerController : MonoBehaviour
 
         if (!dialogLayout.activeSelf && !screamer.activeSelf)
         {
-            moveDirection.y = _verticalVelocity;
-            _cc.Move(moveDirection * Time.deltaTime);
+            Vector3 finalMove = moveDirection + slidingForce;
+            finalMove.y = _verticalVelocity;
+            finalMove += externalPlatformMotion / Time.deltaTime;
+            _cc.Move(finalMove * Time.deltaTime);
+            externalPlatformMotion = Vector3.zero;
+            slidingForce = Vector3.zero;
         }
     }
 
@@ -89,5 +93,15 @@ public class PlayerController : MonoBehaviour
         if (_cc != null) _cc.enabled = false;
         gameObject.transform.position = position;
         if (_cc != null) _cc.enabled = true;
+    }
+
+    public void ApplyPlatformMotion(Vector3 delta)
+    {
+        externalPlatformMotion += new Vector3(delta.x, 0f, delta.z);
+    }
+
+    public void ApplySlide(Vector3 force)
+    {
+        slidingForce = force;
     }
 }

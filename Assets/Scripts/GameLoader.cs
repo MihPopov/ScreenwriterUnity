@@ -2,24 +2,27 @@ using UnityEngine;
 
 public class GameLoader : MonoBehaviour
 {
-    [SerializeField] private GameObject mapGenerator;
+    /*[SerializeField] private GameObject mapGenerator;
     [SerializeField] private GameObject challengeMap;
     [SerializeField] private GameObject lightning;
     [SerializeField] private AudioSource common;
     [SerializeField] private AudioSource creepy;
-    [SerializeField] private GameObject playerLight;
+    [SerializeField] private GameObject playerLight;*/
     private Camera camera;
 
-    private void Awake()
+    private void Start()
     {
         camera = Camera.main;
-        if (PlayerPrefs.GetInt("GameMode", 0) == 0)
+        RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Skybox;
+        DynamicGI.UpdateEnvironment();
+        Debug.Log("Lighting: " + RenderSettings.ambientMode);
+        /*if (PlayerPrefs.GetInt("GameMode", 0) == 0)
         {
             mapGenerator.SetActive(true);
             challengeMap.SetActive(false);
             lightning.SetActive(true);
             camera.clearFlags = CameraClearFlags.Skybox;
-            creepy.mute = false;
+            creepy.mute = true;
             playerLight.SetActive(false);
         }
         else
@@ -29,6 +32,6 @@ public class GameLoader : MonoBehaviour
             lightning.SetActive(false);
             camera.clearFlags = CameraClearFlags.SolidColor;
             common.mute = true;
-        }
+        }*/
     }
 }

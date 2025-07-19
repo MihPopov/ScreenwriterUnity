@@ -26,12 +26,11 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void AddItem(string name, string description, Sprite icon)
+    public void AddItem(InventoryItem item)
     {
-        InventoryItem newItem = new InventoryItem(name, description, icon);
-        items.Add(newItem);
+        items.Add(item);
         UpdateInventory();
-        StartCoroutine(ShowItemReceivePanel(name, icon));
+        StartCoroutine(ShowItemReceivePanel(item.name, item.icon));
     }
 
     private IEnumerator ShowItemReceivePanel(string name, Sprite icon)

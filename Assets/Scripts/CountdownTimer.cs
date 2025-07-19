@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CountdownTimer : MonoBehaviour
@@ -15,7 +16,7 @@ public class CountdownTimer : MonoBehaviour
 
     void Update()
     {
-        if (!inventoryManager.HasItem("Ключ") || timeRemaining < 0)
+        if (!inventoryManager.HasItem("Ключ-карта") || timeRemaining < 0 || SceneManager.GetActiveScene().name != "Horror")
         {
             timerPanel.SetActive(false);
             return;
