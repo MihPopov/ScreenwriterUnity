@@ -125,20 +125,23 @@ public class DialogController : MonoBehaviour
         if (goalAchieved.item != -1 && !inventoryManager.HasItem(items[goalAchieved.item].name))
         {
             if (parkourEvents != null) parkourEvents.ShowPart2();
-            InventoryItem item = items[goalAchieved.item];
-            inventoryManager.AddItem(item);
-            inventoryManager.UpdateInventory();
-            if (SceneManager.GetActiveScene().name == "Horror")
+            else
             {
-                buttonF.SetActive(false);
-                dialogLayout.SetActive(false);
-                Cursor.lockState = CursorLockMode.Locked;
-                if (currentCoroutine != null)
+                InventoryItem item = items[goalAchieved.item];
+                inventoryManager.AddItem(item);
+                inventoryManager.UpdateInventory();
+                if (SceneManager.GetActiveScene().name == "Horror")
                 {
-                    StopCoroutine(currentCoroutine);
-                    currentCoroutine = null;
+                    buttonF.SetActive(false);
+                    dialogLayout.SetActive(false);
+                    Cursor.lockState = CursorLockMode.Locked;
+                    if (currentCoroutine != null)
+                    {
+                        StopCoroutine(currentCoroutine);
+                        currentCoroutine = null;
+                    }
+                    Destroy(gameObject);
                 }
-                Destroy(gameObject);
             }
         }
 

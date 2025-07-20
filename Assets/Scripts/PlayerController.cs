@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("LibEnter"))
         {
             siriusPosition = other.transform.position + new Vector3(0f, 0f, 3f);
-            if (inventoryManager.HasItem("Ключ") && (countdownTimer.timeRemaining <= 0 || PlayerPrefs.GetInt("GameMode", 0) == 0))
+            if (inventoryManager.HasItem("Ключ-карта") && (countdownTimer.timeRemaining <= 0 || PlayerPrefs.GetInt("GameMode", 0) == 0))
             {
                 Teleport(new Vector3(-503f, -499f, -499f));
                 other.transform.rotation = Quaternion.Euler(0f, 90f, 0f);

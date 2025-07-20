@@ -4760,8 +4760,6 @@ GameObject:
   m_Component:
   - component: {fileID: 313761857}
   - component: {fileID: 313761856}
-  - component: {fileID: 313761858}
-  - component: {fileID: 313761860}
   - component: {fileID: 313761859}
   m_Layer: 0
   m_Name: Loader
@@ -4797,24 +4795,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &313761858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 313761855}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 575bdf3fa5082c5499231027d067bd76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mapGenerator: {fileID: 238405149}
-  challengeMap: {fileID: 0}
-  lightning: {fileID: 1501594910}
-  common: {fileID: 313761859}
-  creepy: {fileID: 313761860}
-  playerLight: {fileID: 0}
 --- !u!82 &313761859
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4826,102 +4806,6 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 05e7b4c0f2b9bc947841b51337f4d5b9, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.5
-  m_Pitch: 1
-  Loop: 1
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!82 &313761860
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 313761855}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ddd62def2b4cdcf48a420c3853dd374d, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
@@ -27472,6 +27356,7 @@ MonoBehaviour:
   inventoryPanel: {fileID: 1700869143}
   mapPanel: {fileID: 224762323}
   dialogLayout: {fileID: 505836167}
+  gameOverPanel: {fileID: 0}
   screamer: {fileID: 1861856584}
 --- !u!114 &1925285422
 MonoBehaviour:
@@ -29992,7 +29877,18 @@ MonoBehaviour:
   dialogAnswerPrefab: {fileID: 2464844283014081249, guid: 1b4ba6d10fc6a1e4885781f3f637803e, type: 3}
   buttonE: {fileID: 1426461677}
   buttonF: {fileID: 341143476}
-  inventoryManager: {fileID: 1925285422}
+  items:
+    _serializedList:
+    - Key: 0
+      Value: {fileID: 11400000, guid: 90e8ea222298890478611b5ebb5b4a18, type: 2}
+    - Key: 1
+      Value: {fileID: 11400000, guid: 59263cf6c322caa4f8308419b50b3106, type: 2}
+    - Key: 2
+      Value: {fileID: 11400000, guid: 21e12c928dae9a14ea11038341fd7bd6, type: 2}
+    - Key: 3
+      Value: {fileID: 11400000, guid: 2fa9bc90eba5b4f42bc5dfd343e9ad61, type: 2}
+    - Key: 4
+      Value: {fileID: 11400000, guid: 09ed885a8c8fffb48b52888fd271c33d, type: 2}
 --- !u!65 &2115632546
 BoxCollider:
   m_ObjectHideFlags: 0
