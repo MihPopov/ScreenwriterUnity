@@ -1,4 +1,5 @@
 using System.IO;
+using SFB;
 using UnityEngine;
 using UnityEngine.UI;
 public class Settings : MonoBehaviour
@@ -43,10 +44,10 @@ public class Settings : MonoBehaviour
 
     public void Load()
     {
-        string path = UnityEditor.EditorUtility.OpenFilePanel("Выберите файл", "", "json");
-        if (!string.IsNullOrEmpty(path))
+        var paths = StandaloneFileBrowser.OpenFilePanel("Выберите файл", "", "json", false);
+        if (paths.Length > 0 && File.Exists(paths[0]))
         {
-            dialogField.text = File.ReadAllText(path);
+            dialogField.text = File.ReadAllText(paths[0]);
         }
     }
 }
