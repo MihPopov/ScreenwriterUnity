@@ -84,6 +84,7 @@ public class CharacterGenerator : MonoBehaviour
             dc.buttonE = buttonE;
             dc.buttonF = buttonF;
             dc.itemsDatabase = itemsDatabase;
+            spawned.transform.Find("Name").GetComponent<TMP_Text>().text = dialogs[i].npc_name;
             spawned.transform.Find("Point").Find("Text").GetComponent<TMP_Text>().text = (i + 1).ToString();
         }
     }

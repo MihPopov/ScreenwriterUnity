@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using static DialogApi;
 
 public class DialogController : MonoBehaviour
 {
@@ -21,17 +20,22 @@ public class DialogController : MonoBehaviour
     public ItemsDatabase itemsDatabase;
 
     private InventoryManager inventoryManager;
+    private InfoManager infoManager;
     private Coroutine currentCoroutine;
     private ParkourEvents parkourEvents;
     private DialogApi dialogApi;
+    private SceneData scene;
+    private int phraseId = 0;
 
     private void Start()
     {
-        dialogApi = GetInstance();
-        SceneData scene = FindObjectOfType<Decoder>().scene;
+        dialogApi = new DialogApi();
+        scene = FindObjectOfType<Decoder>().scene;
         dialogApi.SetDialog(scene.sceneId, dialogId);
+        phraseId = dialogApi.GetFirstPhraseId();
         parkourEvents = FindObjectOfType<ParkourEvents>();
         inventoryManager = FindObjectOfType<InventoryManager>();
+        infoManager = FindObjectOfType<InfoManager>();
     }
 
     private InventoryItem GetItemById(int id)
@@ -41,7 +45,7 @@ public class DialogController : MonoBehaviour
         return itemsDatabase.items[id];
     }
 
-    private IEnumerator ShowWindow(int phraseId, float delay)
+    private IEnumerator ShowWindow(float delay)
     {
         if (!DialogOpen) yield break;
         yield return new WaitForSeconds(delay);
@@ -97,6 +101,7 @@ public class DialogController : MonoBehaviour
             buttonE.SetActive(true);
             Cursor.lockState = CursorLockMode.Locked;
             dialogApi.SetPhrase(1);
+            phraseId = 1;
             return;
         }
         if (id == -3)
@@ -104,7 +109,7 @@ public class DialogController : MonoBehaviour
             dialogAnswerPanel.SetActive(false);
             characterPortrait.gameObject.SetActive(true);
             if (currentCoroutine != null) StopCoroutine(currentCoroutine);
-            currentCoroutine = StartCoroutine(ShowWindow(dialogApi.GetPhrase().id, 0));
+            currentCoroutine = StartCoroutine(ShowWindow(0));
             return;
         }
         var currentPhrase = dialogApi.GetPhrase();
@@ -116,6 +121,7 @@ public class DialogController : MonoBehaviour
         dialogName.text = dialogApi.GetMainCharacterName();
         dialogApi.GetAndApplyVariant(id);
         var nextPhrase = dialogApi.GetPhrase();
+        phraseId = nextPhrase.id;
         if (nextPhrase.itemId != -1)
         {
             InventoryItem item = GetItemById(nextPhrase.itemId);
@@ -141,6 +147,8 @@ public class DialogController : MonoBehaviour
                     }
                 }
             }
+            if (!string.IsNullOrEmpty(nextPhrase.info))
+                infoManager.AddInfo(nextPhrase.info);
         }
         var btnNext = Instantiate(dialogAnswerPrefab, dialogAnswerPanel.transform);
         btnNext.GetComponent<AnswersButtonController>().btnIdx = -3;
@@ -170,11 +178,13 @@ public class DialogController : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.E) && !DialogOpen)
         {
+            dialogApi.SetDialog(scene.sceneId, dialogId);
+            dialogApi.SetPhrase(phraseId);
             DialogOpen = true;
             buttonE.SetActive(false);
             buttonF.SetActive(true);
             if (currentCoroutine != null) StopCoroutine(currentCoroutine);
-            currentCoroutine = StartCoroutine(ShowWindow(dialogApi.GetPhrase().id, 0));
+            currentCoroutine = StartCoroutine(ShowWindow(0));
         }
     }
 
