@@ -1,27 +1,25 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
 using static DialogApi;
 
 public class Decoder : MonoBehaviour
 {
+    private const string DialogJsonPathKey = "DialogJsonPath";
     [Tooltip("»м€ JSON-файла (без .json) из папки Resources/dialogues.")]
     public string sceneId;
     public SceneData scene { get; private set; }
 
     private void Awake()
     {
-        string path = $"dialogues/{sceneId}";
-        TextAsset asset = Resources.Load<TextAsset>(path);
-        if (asset == null)
-        {
-            Debug.LogError($"Decoder: не найден файл Resources/{path}.json");
+        string jsonText = LoadDialogJson(sceneId);
+        if (string.IsNullOrEmpty(jsonText))
             return;
-        }
         try
         {
-            var dialogs = JsonConvert.DeserializeObject<List<DialogData>>(asset.text);
+            var dialogs = JsonConvert.DeserializeObject<List<DialogData>>(jsonText);
             scene = new SceneData
             {
                 sceneId = sceneId,
@@ -33,6 +31,25 @@ public class Decoder : MonoBehaviour
         {
             Debug.LogError($"Decoder: ошибка парсинга JSON Ч {ex.Message}");
         }
+    }
+
+    private static string LoadDialogJson(string sceneId)
+    {
+        string customPath = PlayerPrefs.GetString(DialogJsonPathKey, string.Empty);
+        if (!string.IsNullOrEmpty(customPath) && File.Exists(customPath))
+        {
+            return File.ReadAllText(customPath);
+        }
+
+        string path = $"dialogues/{sceneId}";
+        TextAsset asset = Resources.Load<TextAsset>(path);
+        if (asset == null)
+        {
+            Debug.LogError($"Decoder: не найден файл Resources/{path}.json");
+            return null;
+        }
+
+        return asset.text;
     }
 }
 

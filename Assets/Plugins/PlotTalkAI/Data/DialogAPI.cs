@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 public class DialogApi
 {
-    private static DialogApi _instance;
+    private const string DialogJsonPathKey = "DialogJsonPath";
     private List<Phrase> _phrases = new List<Phrase>();
     private Phrase _currentPhrase;
 
@@ -15,23 +16,28 @@ public class DialogApi
     private bool _dialogLoaded = false;
     private string _dialogId;
 
-    private DialogApi() { }
+    public DialogApi() { }
 
-    public static DialogApi GetInstance()
+    private static string LoadDialogJson(string sceneId)
     {
-        if (_instance == null)
-            _instance = new DialogApi();
-        return _instance;
+        string customPath = PlayerPrefs.GetString(DialogJsonPathKey, string.Empty);
+        if (!string.IsNullOrEmpty(customPath) && File.Exists(customPath))
+        {
+            return File.ReadAllText(customPath);
+        }
+
+        string path = $"dialogues/{sceneId}";
+        TextAsset asset = Resources.Load<TextAsset>(path);
+        if (asset == null)
+            throw new InvalidOperationException($"Файл не найден: Resources/{path}.json");
+        return asset.text;
     }
 
     /// Загружает файл сцены и выбирает диалог по id.
     public void SetDialog(string sceneId, string dialogId)
     {
-        string path = $"dialogues/{sceneId}";
-        TextAsset asset = Resources.Load<TextAsset>(path);
-        if (asset == null)
-            throw new InvalidOperationException($"Файл не найден: Resources/{path}.json");
-        var dialogs = JArray.Parse(asset.text);
+        string jsonText = LoadDialogJson(sceneId);
+        var dialogs = JArray.Parse(jsonText);
         var dialog = dialogs.FirstOrDefault(d => d.Value<string>("id") == dialogId);
         if (dialog == null)
             throw new ArgumentException($"Диалог с id={dialogId} не найден в файле {sceneId}.json");
@@ -44,11 +50,17 @@ public class DialogApi
             throw new FormatException($"В диалоге {dialogId} отсутствует поле 'data'.");
         foreach (var node in dataArray)
         {
+            var goal = node["goal_achieved"];
+            string info = null;
+            var infoToken = goal["info"];
+            if (infoToken.Type == JTokenType.String)
+                info = infoToken.Value<string>();
             var phrase = new Phrase
             {
                 id = node.Value<int>("id"),
                 text = node.Value<string>("line"),
-                itemId = node.Value<int?>("goal_achieve") ?? -1
+                itemId = goal.Value<int>("item"),
+                info = info
             };
             var variantsList = new List<Variant>();
             var toArray = node["to"] as JArray;
@@ -69,7 +81,6 @@ public class DialogApi
             _phrases.Add(phrase);
         }
         _dialogLoaded = true;
-        SetPhrase(_phrases[0].id);
     }
 
     private void EnsureDialogLoaded()
@@ -83,6 +94,13 @@ public class DialogApi
     {
         EnsureDialogLoaded();
         return _currentPhrase;
+    }
+
+    /// Возвращает id первой фразы в диалоге.
+    public int GetFirstPhraseId()
+    {
+        EnsureDialogLoaded();
+        return _phrases[0].id;
     }
 
     /// Устанавливает текущую фразу по её id.
@@ -136,6 +154,7 @@ public class DialogApi
         public string text;
         public Variant[] variants;
         public int itemId;
+        public string info;
     }
 
     [Serializable]
