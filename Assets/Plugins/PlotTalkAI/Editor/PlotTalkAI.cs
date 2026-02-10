@@ -28,7 +28,7 @@ public class PlotTalkAI : EditorWindow
     private const float MIN_ZOOM = 0.3f;
     private const float MAX_ZOOM = 2.0f;
     private const float GRAPH_PADDING = 50f;
-    
+
     private GUIStyle addCardStyle;
     private GUIStyle arrowButtonStyle;
     private GUIStyle buttonStyle;
@@ -183,7 +183,7 @@ public class PlotTalkAI : EditorWindow
     {
         var backgroundColor = EditorGUIUtility.isProSkin ? new Color(0.22f, 0.22f, 0.22f) : new Color(0.96f, 0.96f, 0.96f);
         EditorGUI.DrawRect(new Rect(0, 0, position.width, position.height), backgroundColor);
-        
+
         GUILayout.BeginArea(new Rect(
             20,
             20,
@@ -246,158 +246,158 @@ public class PlotTalkAI : EditorWindow
     }
 
     private void CreateStyles()
-{
-    var textColor = EditorGUIUtility.isProSkin ? Color.white : Color.black;
-    var linkColor = EditorGUIUtility.isProSkin ? new Color(0.85f, 0.85f, 0.85f) : new Color(0.1f, 0.3f, 0.8f);
-    var backgroundColor = EditorGUIUtility.isProSkin ? new Color(0.22f, 0.22f, 0.22f) : new Color(0.96f, 0.96f, 0.96f);
-    var cardBackgroundColor = EditorGUIUtility.isProSkin ? new Color(0.3f, 0.3f, 0.3f) : new Color(1f, 1f, 1f);
-
-    linkStyle = new GUIStyle(EditorStyles.label)
     {
-        normal = { textColor = linkColor },
-        hover = { textColor = Color.Lerp(linkColor, Color.white, 0.3f) },
-        alignment = TextAnchor.MiddleCenter,
-        fontSize = 12
-    };
+        var textColor = EditorGUIUtility.isProSkin ? Color.white : Color.black;
+        var linkColor = EditorGUIUtility.isProSkin ? new Color(0.85f, 0.85f, 0.85f) : new Color(0.1f, 0.3f, 0.8f);
+        var backgroundColor = EditorGUIUtility.isProSkin ? new Color(0.22f, 0.22f, 0.22f) : new Color(0.96f, 0.96f, 0.96f);
+        var cardBackgroundColor = EditorGUIUtility.isProSkin ? new Color(0.3f, 0.3f, 0.3f) : new Color(1f, 1f, 1f);
 
-    centeredLabelStyle = new GUIStyle(EditorStyles.label)
-    {
-        alignment = TextAnchor.MiddleCenter,
-        fontSize = 24,
-        fontStyle = FontStyle.Bold,
-        normal = { textColor = textColor },
-        wordWrap = true
-    };
+        linkStyle = new GUIStyle(EditorStyles.label)
+        {
+            normal = { textColor = linkColor },
+            hover = { textColor = Color.Lerp(linkColor, Color.white, 0.3f) },
+            alignment = TextAnchor.MiddleCenter,
+            fontSize = 12
+        };
 
-    textAreaStyle = new GUIStyle(EditorStyles.textArea)
-    {
-        wordWrap = true
-    };
+        centeredLabelStyle = new GUIStyle(EditorStyles.label)
+        {
+            alignment = TextAnchor.MiddleCenter,
+            fontSize = 24,
+            fontStyle = FontStyle.Bold,
+            normal = { textColor = textColor },
+            wordWrap = true
+        };
 
-    centeredSmallLabelStyle = new GUIStyle(EditorStyles.label)
-    {
-        alignment = TextAnchor.MiddleCenter,
-        fontSize = 20,
-        fontStyle = FontStyle.Bold,
-        normal = { textColor = textColor },
-        wordWrap = true
-    };
+        textAreaStyle = new GUIStyle(EditorStyles.textArea)
+        {
+            wordWrap = true
+        };
 
-    centeredItalicLabelStyle = new GUIStyle(EditorStyles.label)
-    {
-        alignment = TextAnchor.MiddleCenter,
-        fontSize = 14,
-        fontStyle = FontStyle.Italic,
-        normal = { textColor = textColor },
-        wordWrap = true
-    };
+        centeredSmallLabelStyle = new GUIStyle(EditorStyles.label)
+        {
+            alignment = TextAnchor.MiddleCenter,
+            fontSize = 20,
+            fontStyle = FontStyle.Bold,
+            normal = { textColor = textColor },
+            wordWrap = true
+        };
 
-    fieldLabelStyle = new GUIStyle(EditorStyles.label)
-    {
-        normal = { textColor = textColor },
-        fontSize = 12,
-        margin = new RectOffset(2, 0, 5, 2)
-    };
+        centeredItalicLabelStyle = new GUIStyle(EditorStyles.label)
+        {
+            alignment = TextAnchor.MiddleCenter,
+            fontSize = 14,
+            fontStyle = FontStyle.Italic,
+            normal = { textColor = textColor },
+            wordWrap = true
+        };
 
-    buttonStyle = new GUIStyle(EditorStyles.miniButton)
-    {
-        fontSize = 14,
-        alignment = TextAnchor.MiddleCenter,
-        fontStyle = FontStyle.Bold,
-        fixedHeight = 40
-    };
+        fieldLabelStyle = new GUIStyle(EditorStyles.label)
+        {
+            normal = { textColor = textColor },
+            fontSize = 12,
+            margin = new RectOffset(2, 0, 5, 2)
+        };
 
-    lowButtonStyle = new GUIStyle(buttonStyle)
-    {
-        fixedHeight = 30
-    };
+        buttonStyle = new GUIStyle(EditorStyles.miniButton)
+        {
+            fontSize = 14,
+            alignment = TextAnchor.MiddleCenter,
+            fontStyle = FontStyle.Bold,
+            fixedHeight = 40
+        };
 
-    textFieldStyle = new GUIStyle(EditorStyles.textField)
-    {
-        fontSize = 14,
-        fixedHeight = 35,
-        padding = new RectOffset(10, 10, 8, 8),
-        alignment = TextAnchor.MiddleLeft,
-        normal = { textColor = textColor }
-    };
+        lowButtonStyle = new GUIStyle(buttonStyle)
+        {
+            fixedHeight = 30
+        };
 
-    // Стиль для карточек игр
-    cardStyle = new GUIStyle(EditorStyles.helpBox)
-    {
-        margin = new RectOffset(5, 5, 10, 10),
-        padding = new RectOffset(15, 15, 15, 15),
-        normal = { background = MakeTex(2, 2, cardBackgroundColor) }
-    };
+        textFieldStyle = new GUIStyle(EditorStyles.textField)
+        {
+            fontSize = 14,
+            fixedHeight = 35,
+            padding = new RectOffset(10, 10, 8, 8),
+            alignment = TextAnchor.MiddleLeft,
+            normal = { textColor = textColor }
+        };
 
-    addCardStyle = new GUIStyle(EditorStyles.helpBox)
-    {
-        margin = new RectOffset(5, 5, 10, 10),
-        padding = new RectOffset(15, 15, 15, 15),
-        normal = { background = MakeTex(2, 2, cardBackgroundColor) }
-    };
+        // Стиль для карточек игр
+        cardStyle = new GUIStyle(EditorStyles.helpBox)
+        {
+            margin = new RectOffset(5, 5, 10, 10),
+            padding = new RectOffset(15, 15, 15, 15),
+            normal = { background = MakeTex(2, 2, cardBackgroundColor) }
+        };
 
-    // Стиль для заголовка карточки
-    cardTitleStyle = new GUIStyle(EditorStyles.label)
-    {
-        fontSize = 16,
-        fontStyle = FontStyle.Bold,
-        normal = { textColor = textColor },
-        margin = new RectOffset(0, 0, 5, 10)
-    };
+        addCardStyle = new GUIStyle(EditorStyles.helpBox)
+        {
+            margin = new RectOffset(5, 5, 10, 10),
+            padding = new RectOffset(15, 15, 15, 15),
+            normal = { background = MakeTex(2, 2, cardBackgroundColor) }
+        };
 
-    // Стиль для кнопок-иконок
-    iconButtonStyle = new GUIStyle(EditorStyles.miniButton)
-    {
-        fixedWidth = 30,
-        fixedHeight = 30,
-        padding = new RectOffset(0, 0, 0, 0)
-    };
+        // Стиль для заголовка карточки
+        cardTitleStyle = new GUIStyle(EditorStyles.label)
+        {
+            fontSize = 16,
+            fontStyle = FontStyle.Bold,
+            normal = { textColor = textColor },
+            margin = new RectOffset(0, 0, 5, 10)
+        };
 
-    // Стиль для большого плюса
-    plusStyle = new GUIStyle(EditorStyles.label)
-    {
-        fontSize = 64,
-        alignment = TextAnchor.MiddleCenter,
-        fontStyle = FontStyle.Bold,
-        normal = { textColor = textColor }
-    };
+        // Стиль для кнопок-иконок
+        iconButtonStyle = new GUIStyle(EditorStyles.miniButton)
+        {
+            fixedWidth = 30,
+            fixedHeight = 30,
+            padding = new RectOffset(0, 0, 0, 0)
+        };
 
-    // Стиль для подписи плюса
-    plusLabelStyle = new GUIStyle(EditorStyles.label)
-    {
-        fontSize = 16,
-        alignment = TextAnchor.MiddleCenter,
-        fontStyle = FontStyle.Bold,
-        normal = { textColor = textColor }
-    };
+        // Стиль для большого плюса
+        plusStyle = new GUIStyle(EditorStyles.label)
+        {
+            fontSize = 64,
+            alignment = TextAnchor.MiddleCenter,
+            fontStyle = FontStyle.Bold,
+            normal = { textColor = textColor }
+        };
 
-    // Стиль для кнопки со стрелкой
-    arrowButtonStyle = new GUIStyle(EditorStyles.label)
-    {
-        alignment = TextAnchor.UpperCenter,
-        normal = { textColor = textColor },
-        hover = { textColor = new Color(0.3f, 0.3f, 0.3f) },
-        active = { textColor = new Color(0.3f, 0.3f, 0.3f) },
-        padding = new RectOffset(0, 0, 0, 0),
-        margin = new RectOffset(0, 0, 0, 0),
-        fixedWidth = 20,
-        fixedHeight = 20
-    };
+        // Стиль для подписи плюса
+        plusLabelStyle = new GUIStyle(EditorStyles.label)
+        {
+            fontSize = 16,
+            alignment = TextAnchor.MiddleCenter,
+            fontStyle = FontStyle.Bold,
+            normal = { textColor = textColor }
+        };
 
-    scriptLabelStyle = new GUIStyle(EditorStyles.label)
-    {
-        normal = { textColor = textColor },
-        hover = { textColor = new Color(0.3f, 0.3f, 0.3f) },
-        fontSize = 14
-    };
+        // Стиль для кнопки со стрелкой
+        arrowButtonStyle = new GUIStyle(EditorStyles.label)
+        {
+            alignment = TextAnchor.UpperCenter,
+            normal = { textColor = textColor },
+            hover = { textColor = new Color(0.3f, 0.3f, 0.3f) },
+            active = { textColor = new Color(0.3f, 0.3f, 0.3f) },
+            padding = new RectOffset(0, 0, 0, 0),
+            margin = new RectOffset(0, 0, 0, 0),
+            fixedWidth = 20,
+            fixedHeight = 20
+        };
 
-    zoomLabelStyle = new GUIStyle(EditorStyles.label)
-    {
-        normal = { textColor = Color.gray },
-        fontSize = 10,
-        alignment = TextAnchor.LowerRight
-    };
-}
+        scriptLabelStyle = new GUIStyle(EditorStyles.label)
+        {
+            normal = { textColor = textColor },
+            hover = { textColor = new Color(0.3f, 0.3f, 0.3f) },
+            fontSize = 14
+        };
+
+        zoomLabelStyle = new GUIStyle(EditorStyles.label)
+        {
+            normal = { textColor = Color.gray },
+            fontSize = 10,
+            alignment = TextAnchor.LowerRight
+        };
+    }
 
 
     private void DrawLoginPage()
@@ -502,7 +502,7 @@ public class PlotTalkAI : EditorWindow
         var buttonRect = GUILayoutUtility.GetRect(GUIContent.none, buttonStyle, GUILayout.Height(40));
         if (GUI.Button(buttonRect, "Зарегистрироваться", buttonStyle))
         {
-            if (string.IsNullOrEmpty(registerEmail) || string.IsNullOrEmpty(registerPassword) || 
+            if (string.IsNullOrEmpty(registerEmail) || string.IsNullOrEmpty(registerPassword) ||
                 string.IsNullOrEmpty(registerName) || string.IsNullOrEmpty(registerSurname))
             {
                 EditorUtility.DisplayDialog("Ошибка", "Заполните все поля", "OK");
@@ -548,7 +548,10 @@ public class PlotTalkAI : EditorWindow
     private void DrawMainPage()
     {
         var games = StorageApi.GetInstance().GetGamesArray(StorageApi.GetInstance().LoadFullJson());
-        GUILayout.Label($"Добро пожаловать, {StorageApi.GetInstance().GetUser()?["data"]?["name"] ?? "Ошибка получения имени"} {StorageApi.GetInstance().GetUser()?["data"]?["surname"] ?? "Ошибка получения фамилии"}!", centeredLabelStyle);
+        var user = StorageApi.GetInstance().GetUser();
+        var userName = user?["name"] ?? user?["data"]?["name"];
+        var userSurname = user?["surname"] ?? user?["data"]?["surname"];
+        GUILayout.Label($"Добро пожаловать, {userName ?? "Ошибка получения имени"} {userSurname ?? "Ошибка получения фамилии"}!", centeredLabelStyle);
         GUILayout.Space(30);
 
         // Рассчитываем доступную ширину с учетом полосы прокрутки
@@ -1403,7 +1406,7 @@ public class PlotTalkAI : EditorWindow
         GUILayout.Space(5);
 
         if (GUILayout.Button("Сохранить", buttonStyle, GUILayout.Height(40)))
-        { 
+        {
             if (!string.IsNullOrEmpty(editSceneDescription) && !string.IsNullOrEmpty(editSceneName) &&
                 editSceneCharacters.Count > 0)
             {
@@ -1475,28 +1478,28 @@ public class PlotTalkAI : EditorWindow
                 selectedMainCharacterId = (string)selectedScript["main_character"] ?? "";
                 selectedNPCId = (string)selectedScript["npc"] ?? "";
                 editScriptDescription = (string)selectedScript["description"] ?? "";
-                
+
                 // Безопасная инициализация infoData
                 var infoData = selectedScript["infoData"] as JObject ?? new JObject();
                 playerGetsInfo = (bool)(infoData["gets"] ?? false);
                 playerGetsInfoName = (string)(infoData["name"] ?? "");
                 playerGetsInfoCondition = (string)(infoData["condition"] ?? "");
-                
+
                 // Безопасная инициализация itemData
                 var itemData = selectedScript["itemData"] as JObject ?? new JObject();
                 playerGetsItem = (bool)(itemData["gets"] ?? false);
                 playerGetsItemName = (string)(itemData["name"] ?? "");
                 playerGetsItemCondition = (string)(itemData["condition"] ?? "");
-                
+
                 editScriptAdditional = (string)selectedScript["additional"] ?? "";
-                
+
                 // Безопасная инициализация отношений
                 var toMainCharacterRelations = (string)selectedScript["to_main_character_relations"] ?? scriptCharacterAttitude[0];
                 var toNpcRelations = (string)selectedScript["to_npc_relations"] ?? scriptCharacterAttitude[0];
-                
+
                 toMainCharacterRelation = Array.IndexOf(scriptCharacterAttitude, toMainCharacterRelations);
                 if (toMainCharacterRelation == -1) toMainCharacterRelation = 0;
-                
+
                 toNpcRelation = Array.IndexOf(scriptCharacterAttitude, toNpcRelations);
                 if (toNpcRelation == -1) toNpcRelation = 0;
             }
@@ -1556,7 +1559,7 @@ public class PlotTalkAI : EditorWindow
         GUILayout.Space(5);
         GUILayout.Label(" Главный персонаж", cardTitleStyle);
         GUILayout.Space(5);
-        
+
         var sceneCharacterIds = ((JArray)selectedScene["characters"] ?? new JArray()).ToObject<string[]>();
         var availableCharacters = ((JArray)selectedGame["characters"] ?? new JArray())
             .Where(c => sceneCharacterIds.Contains((string)c["id"]))
@@ -1586,12 +1589,12 @@ public class PlotTalkAI : EditorWindow
         GUILayout.Space(5);
         GUILayout.Label(" NPC", cardTitleStyle);
         GUILayout.Space(5);
-        
+
         // Отрисовка dropdown
         selectedNPCIndex = EditorGUILayout.Popup(selectedNPCIndex, characterNames);
         selectedNPCId = characterIds[selectedNPCIndex];
         GUILayout.Space(5);
-        
+
         EditorGUILayout.BeginHorizontal();
         GUILayout.Label("Отношение к главному персонажу");
         toMainCharacterRelation = EditorGUILayout.Popup(toMainCharacterRelation, scriptCharacterAttitude);
@@ -1606,7 +1609,7 @@ public class PlotTalkAI : EditorWindow
 
         // Сохраняем предыдущие значения перед изменением
         bool previousPlayerGetsItem = playerGetsItem;
-        
+
         EditorGUILayout.BeginHorizontal();
         GUILayout.Label("Персонаж получит предмет");
         playerGetsItem = EditorGUILayout.Toggle(playerGetsItem, GUILayout.Width(20));
@@ -1632,7 +1635,7 @@ public class PlotTalkAI : EditorWindow
 
         // Сохраняем предыдущие значения перед изменением
         bool previousPlayerGetsInfo = playerGetsInfo;
-        
+
         EditorGUILayout.BeginHorizontal();
         GUILayout.Label("Персонаж получит информацию");
         playerGetsInfo = EditorGUILayout.Toggle(playerGetsInfo, GUILayout.Width(20));
@@ -1681,7 +1684,7 @@ public class PlotTalkAI : EditorWindow
         {
             // Для существующего скрипта - две кнопки
             GUILayout.BeginHorizontal();
-        
+
             if (GUILayout.Button("Сохранить", buttonStyle, GUILayout.Height(40)))
             {
                 if (ValidateScriptFields())
@@ -1689,7 +1692,7 @@ public class PlotTalkAI : EditorWindow
                     SaveScriptOnly();
                 }
             }
-        
+
             if (GUILayout.Button("Перегенерировать", buttonStyle, GUILayout.Height(40)))
             {
                 if (ValidateScriptFields())
@@ -1697,7 +1700,7 @@ public class PlotTalkAI : EditorWindow
                     SaveAndGenerateScript();
                 }
             }
-        
+
             GUILayout.EndHorizontal();
         }
 
@@ -1718,39 +1721,39 @@ public class PlotTalkAI : EditorWindow
         GUILayout.EndVertical();
         GUILayout.EndArea();
     }
-    
+
     private bool ValidateScriptFields()
     {
-        if (string.IsNullOrEmpty(editScriptName) || 
-            editScriptMinMainChar <= 0 || 
+        if (string.IsNullOrEmpty(editScriptName) ||
+            editScriptMinMainChar <= 0 ||
             editScriptMaxMainChar <= 0 ||
-            editScriptMinDepth <= 0 || 
+            editScriptMinDepth <= 0 ||
             editScriptMaxDepth <= 0 ||
             string.IsNullOrEmpty(editScriptDescription))
         {
             EditorUtility.DisplayDialog("Ошибка", "Все поля обязательны для заполнения", "OK");
             return false;
         }
-        
+
         if (editScriptMinMainChar > editScriptMaxMainChar)
         {
             EditorUtility.DisplayDialog("Ошибка", "Минимальное количество ответов не может быть больше максимального", "OK");
             return false;
         }
-        
+
         if (editScriptMinDepth > editScriptMaxDepth)
         {
             EditorUtility.DisplayDialog("Ошибка", "Минимальная глубина не может быть больше максимальной", "OK");
             return false;
         }
-        
+
         return true;
     }
 
     private void SaveScriptOnly()
     {
         var scriptData = CreateScriptData(selectedScript["result"] as JObject);
-        
+
         if (selectedScript != null)
         {
             // Обновляем существующий скрипт
@@ -1765,12 +1768,12 @@ public class PlotTalkAI : EditorWindow
             StorageApi.GetInstance().AddScript((string)selectedGame["id"], (long)selectedScene["id"], scriptData);
             selectedScript = scriptData;
         }
-        
+
         // Обновляем данные
         selectedGame = StorageApi.GetInstance().GetGameById((string)selectedGame["id"]);
         selectedScene = StorageApi.GetInstance().GetSceneById((string)selectedGame["id"], (long)selectedScene["id"]);
         selectedScript = null;
-        
+
         EditorUtility.DisplayDialog("Успех", "Диалог сохранен", "OK");
         SwitchPage(Page.GameDetail);
     }
@@ -1778,7 +1781,7 @@ public class PlotTalkAI : EditorWindow
     private void SaveAndGenerateScript()
     {
         var scriptData = selectedScript != null ? CreateScriptData(selectedScript["result"] as JObject) : CreateScriptData(null);
-        
+
         // Сначала сохраняем скрипт
         if (selectedScript != null)
         {
@@ -1792,7 +1795,7 @@ public class PlotTalkAI : EditorWindow
             StorageApi.GetInstance().AddScript((string)selectedGame["id"], (long)selectedScene["id"], scriptData);
             selectedScript = scriptData;
         }
-        
+
         // Затем генерируем диалог
         GenerateDialogue();
     }
@@ -1833,7 +1836,7 @@ public class PlotTalkAI : EditorWindow
         // Получаем данные персонажей
         var npcCharacter = GetCharacterById(selectedNPCId);
         var heroCharacter = GetCharacterById(selectedMainCharacterId);
-        
+
         if (npcCharacter == null || heroCharacter == null)
         {
             EditorUtility.DisplayDialog("Ошибка", "Не удалось найти данные персонажей", "OK");
@@ -1842,7 +1845,7 @@ public class PlotTalkAI : EditorWindow
 
         // Формируем цели
         var goals = new JArray();
-        
+
         if (playerGetsInfo)
         {
             goals.Add(new JObject
@@ -1852,12 +1855,12 @@ public class PlotTalkAI : EditorWindow
                 ["condition"] = playerGetsInfoCondition
             });
         }
-        
+
         if (playerGetsItem)
         {
             goals.Add(new JObject
             {
-                ["type"] = "item", 
+                ["type"] = "item",
                 ["object"] = playerGetsItemName,
                 ["condition"] = playerGetsItemCondition
             });
@@ -1902,7 +1905,7 @@ public class PlotTalkAI : EditorWindow
             ["scene_id"] = selectedScene["id"]?.ToString() ?? "",
             ["script_id"] = selectedScript["id"]?.ToString() ?? ""
         };
-        
+
         selectedGame = StorageApi.GetInstance().GetGameById((string)selectedGame["id"]);
         selectedScene = StorageApi.GetInstance().GetSceneById((string)selectedGame["id"], (long)selectedScene["id"]);
         selectedScript = StorageApi.GetInstance().GetScriptById((string)selectedGame["id"], (long)selectedScene["id"], (string)selectedScript["id"]);
@@ -1927,7 +1930,7 @@ public class PlotTalkAI : EditorWindow
     {
         if (string.IsNullOrEmpty(characterId) || selectedGame == null)
             return null;
-            
+
         var characters = StorageApi.GetInstance().GetCharactersArray(selectedGame);
         return characters?.FirstOrDefault(c => (string)c["id"] == characterId) as JObject;
     }
@@ -2012,14 +2015,14 @@ public class PlotTalkAI : EditorWindow
         isTakingSnapshot = false;
     }
 
-// Метод для глубокого копирования JObject
+    // Метод для глубокого копирования JObject
     private JObject DeepCopy(JObject original)
     {
         if (original == null) return null;
         return JObject.Parse(original.ToString());
     }
 
-// Метод отмены
+    // Метод отмены
     private void Undo()
     {
         if (undoStack.Count == 0) return;
@@ -2039,7 +2042,7 @@ public class PlotTalkAI : EditorWindow
         }
     }
 
-// Метод возврата
+    // Метод возврата
     private void Redo()
     {
         if (redoStack.Count == 0) return;
@@ -2370,8 +2373,8 @@ public class PlotTalkAI : EditorWindow
             // В методе DrawGraphControlPanel() замените код кнопки обновления:
             if (GUILayout.Button(EditorGUIUtility.IconContent("d_Refresh"), iconButtonStyle))
             {
-                if (EditorUtility.DisplayDialog("Обновить данные?", 
-                        "Вы хотите загрузить последнюю версию данных с сервера? Все несохраненные локальные изменения будут потеряны.", 
+                if (EditorUtility.DisplayDialog("Обновить данные?",
+                        "Вы хотите загрузить последнюю версию данных с сервера? Все несохраненные локальные изменения будут потеряны.",
                         "Да, обновить", "Отмена"))
                 {
                     SyncDataFromServer();
@@ -2459,7 +2462,7 @@ public class PlotTalkAI : EditorWindow
         GUILayout.Space(5);
         GUILayout.EndHorizontal();
     }
-    
+
     private void SyncDataFromServer()
     {
         if (!StorageApi.GetInstance().IsLoggedIn())
@@ -2477,33 +2480,33 @@ public class PlotTalkAI : EditorWindow
             BackendApi.GetUserDataFromServer((success, serverData) =>
             {
                 EditorUtility.ClearProgressBar();
-                
+
                 if (success)
                 {
                     try
                     {
                         // Загружаем текущий локальный файл
                         var fullJson = StorageApi.GetInstance().LoadFullJson();
-                        
+
                         // Сохраняем токен и ID пользователя, заменяем только данные
                         var currentUser = fullJson["user"];
                         currentUser["data"] = serverData["data"];
-                        
+
                         // Сохраняем обновленный файл
                         StorageApi.GetInstance().SetDataString(StorageApi.Serialize(fullJson));
-                        
+
                         // Перезагружаем текущую игру, сцену и скрипт из обновленных данных
                         selectedGame = StorageApi.GetInstance().GetGameById((string)selectedGame["id"]);
                         selectedScene = StorageApi.GetInstance().GetSceneById((string)selectedGame["id"], (long)selectedScene["id"]);
                         selectedScript = StorageApi.GetInstance().GetScriptById((string)selectedGame["id"], (long)selectedScene["id"], (string)selectedScript["id"]);
 
                         ResetGraphView();
-                        
+
                         // Очищаем стеки при перезагрузке
                         undoStack.Clear();
                         redoStack.Clear();
                         selectedNode = null;
-                        
+
                         EditorUtility.DisplayDialog("Успех", "Данные успешно загружены с сервера", "OK");
                         Repaint();
                     }
@@ -2515,7 +2518,7 @@ public class PlotTalkAI : EditorWindow
                 else
                 {
                     string errorMessage = serverData?["message"]?.ToString() ?? "Неизвестная ошибка";
-                    EditorUtility.DisplayDialog("Ошибка синхронизации", 
+                    EditorUtility.DisplayDialog("Ошибка синхронизации",
                         $"Не удалось загрузить данные с сервера: {errorMessage}", "OK");
                 }
             });
@@ -3056,54 +3059,54 @@ public class PlotTalkAI : EditorWindow
 
         // 2. Затем рисуем узлы поверх связей
         foreach (JObject node in nodes)
-    {
-        var nodePos = GetNodePosition(node);
-        var nodeRect = new Rect(
-            nodePos.x * graphZoom + graphPanOffset.x,
-            nodePos.y * graphZoom + graphPanOffset.y,
-            180 * graphZoom,
-            50 * graphZoom
-        );
-
-        if (IsNodeVisible(nodeRect, new Rect(0, 0, graphRect.width, graphRect.height)))
         {
-            // Создаем стиль с масштабируемым шрифтом
-            var nodeStyle = new GUIStyle(EditorStyles.helpBox);
-            nodeStyle.wordWrap = true;
-            nodeStyle.normal.textColor = EditorGUIUtility.isProSkin ? Color.white : Color.black;
-
-            // Подсветка выделенной ноды
-            if (node == selectedNode)
-            {
-                nodeStyle.normal.background = MakeTex(2, 2, 
-                    EditorGUIUtility.isProSkin ? 
-                    new Color(0.2f, 0.4f, 0.8f, 0.8f) : // Синяя подсветка для темной темы
-                    new Color(0.6f, 0.8f, 1f, 0.8f));   // Светло-синяя подсветка для светлой темы
-            }
-            else
-            {
-                nodeStyle.normal.background = MakeTex(2, 2, 
-                    EditorGUIUtility.isProSkin ? 
-                    new Color(0.3f, 0.3f, 0.3f) :       // Темный фон для темной темы
-                    new Color(0.95f, 0.95f, 0.95f));    // Светлый фон для светлой темы
-            }
-
-            // Масштабируем шрифт в зависимости от зума
-            nodeStyle.fontSize = Mathf.RoundToInt(12 * graphZoom);
-
-            // Добавляем отступы, которые также масштабируются
-            nodeStyle.padding = new RectOffset(
-                Mathf.RoundToInt(8 * graphZoom),
-                Mathf.RoundToInt(8 * graphZoom),
-                Mathf.RoundToInt(4 * graphZoom),
-                Mathf.RoundToInt(4 * graphZoom)
+            var nodePos = GetNodePosition(node);
+            var nodeRect = new Rect(
+                nodePos.x * graphZoom + graphPanOffset.x,
+                nodePos.y * graphZoom + graphPanOffset.y,
+                180 * graphZoom,
+                50 * graphZoom
             );
 
-            // Отрисовка узла с масштабируемым текстом
-            var nodeText = TruncateText(node["line"]?.ToString() ?? "", 10);
-            GUI.Box(nodeRect, nodeText, nodeStyle);
+            if (IsNodeVisible(nodeRect, new Rect(0, 0, graphRect.width, graphRect.height)))
+            {
+                // Создаем стиль с масштабируемым шрифтом
+                var nodeStyle = new GUIStyle(EditorStyles.helpBox);
+                nodeStyle.wordWrap = true;
+                nodeStyle.normal.textColor = EditorGUIUtility.isProSkin ? Color.white : Color.black;
+
+                // Подсветка выделенной ноды
+                if (node == selectedNode)
+                {
+                    nodeStyle.normal.background = MakeTex(2, 2,
+                        EditorGUIUtility.isProSkin ?
+                        new Color(0.2f, 0.4f, 0.8f, 0.8f) : // Синяя подсветка для темной темы
+                        new Color(0.6f, 0.8f, 1f, 0.8f));   // Светло-синяя подсветка для светлой темы
+                }
+                else
+                {
+                    nodeStyle.normal.background = MakeTex(2, 2,
+                        EditorGUIUtility.isProSkin ?
+                        new Color(0.3f, 0.3f, 0.3f) :       // Темный фон для темной темы
+                        new Color(0.95f, 0.95f, 0.95f));    // Светлый фон для светлой темы
+                }
+
+                // Масштабируем шрифт в зависимости от зума
+                nodeStyle.fontSize = Mathf.RoundToInt(12 * graphZoom);
+
+                // Добавляем отступы, которые также масштабируются
+                nodeStyle.padding = new RectOffset(
+                    Mathf.RoundToInt(8 * graphZoom),
+                    Mathf.RoundToInt(8 * graphZoom),
+                    Mathf.RoundToInt(4 * graphZoom),
+                    Mathf.RoundToInt(4 * graphZoom)
+                );
+
+                // Отрисовка узла с масштабируемым текстом
+                var nodeText = TruncateText(node["line"]?.ToString() ?? "", 10);
+                GUI.Box(nodeRect, nodeText, nodeStyle);
+            }
         }
-    }
 
         // Отрисовка временной линии при создании связи
         if (isCreatingLink && linkCreationSource != null)
@@ -3215,7 +3218,7 @@ public class PlotTalkAI : EditorWindow
         return p;
     }
 
-// Находит узел по ID
+    // Находит узел по ID
     private JObject FindNodeById(int id)
     {
         if (selectedScript == null || selectedScript["result"] == null)
@@ -3235,7 +3238,7 @@ public class PlotTalkAI : EditorWindow
         return string.Join(" ", words.Take(maxWords)) + "...";
     }
 
-// Вычисляет точки и касательные для кривой с перпендикулярными соединениями
+    // Вычисляет точки и касательные для кривой с перпендикулярными соединениями
     private void CalculateCurveWithTangents(Rect fromRect, Rect toRect, out Vector2 startPoint, out Vector2 endPoint,
         out Vector2 startTangent, out Vector2 endTangent)
     {
@@ -3283,7 +3286,7 @@ public class PlotTalkAI : EditorWindow
         }
     }
 
-// Находит точку на границе прямоугольника в заданном направлении
+    // Находит точку на границе прямоугольника в заданном направлении
     private Vector2 GetBorderPoint(Rect rect, Vector2 direction)
     {
         Vector2 center = rect.center;
@@ -3311,7 +3314,7 @@ public class PlotTalkAI : EditorWindow
         return center + direction * t;
     }
 
-// Определяет внешнюю нормаль к границе прямоугольника в заданной точке
+    // Определяет внешнюю нормаль к границе прямоугольника в заданной точке
     private Vector2 GetOutwardBorderNormal(Rect rect, Vector2 point)
     {
         // Определяем, на какой стороне находится точка
@@ -3333,7 +3336,7 @@ public class PlotTalkAI : EditorWindow
             return Vector2.up; // Внешняя нормаль к нижней стороне (направлена вниз)
     }
 
-// Рисует стрелку, ориентированную по направлению кривой
+    // Рисует стрелку, ориентированную по направлению кривой
     private void DrawArrowAlongCurve(Vector2 arrowHead, Vector2 tangentPoint)
     {
         // Вычисляем направление кривой в конечной точке
@@ -3361,7 +3364,7 @@ public class PlotTalkAI : EditorWindow
         Handles.DrawAAConvexPolygon(adjustedArrowHead, arrowRight, arrowLeft);
     }
 
-// Обновляем проверку видимости линии для работы с Vector2
+    // Обновляем проверку видимости линии для работы с Vector2
     private bool IsLineVisible(Vector2 start, Vector2 end, Rect visibleArea)
     {
         return visibleArea.Contains(start) || visibleArea.Contains(end) ||
@@ -3379,10 +3382,10 @@ public class PlotTalkAI : EditorWindow
         graphPanOffset = Vector2.zero;
         isPanning = false;
         selectedNode = null;
-    
+
         // Пересчитываем границы графа
         CalculateGraphBounds();
-    
+
         // Автоматическое расположение узлов если нужно
         if (selectedScript != null && selectedScript["result"] != null && selectedScript["result"].HasValues)
         {
@@ -3392,7 +3395,7 @@ public class PlotTalkAI : EditorWindow
                 AutoLayoutDAG();
             }
         }
-    
+
         Repaint();
     }
 

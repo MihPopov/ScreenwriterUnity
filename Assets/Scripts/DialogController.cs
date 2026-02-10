@@ -147,9 +147,9 @@ public class DialogController : MonoBehaviour
                     }
                 }
             }
-            if (!string.IsNullOrEmpty(nextPhrase.info))
-                infoManager.AddInfo(nextPhrase.info);
         }
+        if (!string.IsNullOrEmpty(nextPhrase.info))
+            infoManager.AddInfo(nextPhrase.info);
         var btnNext = Instantiate(dialogAnswerPrefab, dialogAnswerPanel.transform);
         btnNext.GetComponent<AnswersButtonController>().btnIdx = -3;
         btnNext.transform.GetChild(0).GetComponent<Text>().text = "Продолжить диалог";
